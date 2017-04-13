@@ -10,8 +10,11 @@ block mc
   #host
     img#host-logo(src="img/title2.png")
     #question_content
-      img#question_txt(src="img/mc/question-list/start.png")  
-    ul.question
+      h2 Question
+        span#question_no
+      p#question_txt
+      p#answer_txt
+    ul.question.full-screen-absolute
       - var n = 0
       while n < 9
         - n++

@@ -2,7 +2,7 @@
 function Question() {
   this.questions = {
     "1": {
-      "question": "img/mc/question-list/q1.png",
+      "question": "XXXXX XXXXX XXX XXXXXXX?",
       "answer_txt": "<p>A. dummy text</p><p>B. dummy text</p><p>C. dummy text</p>",
       "answers": {"A":"A","B":"B","C":"C"},
       "correct_answer": "A",
@@ -11,7 +11,7 @@ function Question() {
       "status": 0,
     },
     "2": {
-      "question": "img/mc/question-list/q2.png",
+      "question": "XXXXX XXXXX XXX XXXXXXX?",
       "answer_txt": "<p>Yes / No</p>",
       "answers": {"Yes":"Yes","No":"No"},
       "correct_answer": "Yes",
@@ -20,7 +20,7 @@ function Question() {
       "status": 0,
     },
     "3": {
-      "question": "img/mc/question-list/q3.png",
+      "question": "XXXXX XXXXX XXX XXXXXXX?",
       "answer_txt": "<p>A. dummy text</p><p>B. dummy text</p><p>C. dummy text</p>",
       "answers": {"A":"A","B":"B","C":"C"},
       "correct_answer": "A",
@@ -29,7 +29,7 @@ function Question() {
       "status": 0,
     },
     "4": {
-      "question": "img/mc/question-list/q4.png",
+      "question": "XXXXX XXXXX XXX XXXXXXX?",
       "answer_txt": "<p>Yes / No</p>",
       "answers": {"Yes":"Yes","No":"No"},
       "correct_answer": "Yes",
@@ -38,7 +38,7 @@ function Question() {
       "status": 0,
     },
     "5": {
-      "question": "img/mc/question-list/q5.png",
+      "question": "XXXXX XXXXX XXX XXXXXXX?",
       "answer_txt": "<p>A. dummy text</p><p>B. dummy text</p><p>C. dummy text</p>",
       "answers": {"A":"A","B":"B","C":"C"},
       "correct_answer": "A",
@@ -47,7 +47,7 @@ function Question() {
       "status": 0,
     },
     "6": {
-      "question": "img/mc/question-list/q6.png",
+      "question": "XXXXX XXXXX XXX XXXXXXX?",
       "answer_txt": "<p>Yes / No</p>",
       "answers": {"Yes":"Yes","No":"No"},
       "correct_answer": "Yes",
@@ -56,7 +56,7 @@ function Question() {
       "status": 0,
     },
     "7": {
-      "question": "img/mc/question-list/q7.png",
+      "question": "XXXXX XXXXX XXX XXXXXXX?",
       "answer_txt": "<p>A. dummy text</p><p>B. dummy text</p><p>C. dummy text</p>",
       "answers": {"A":"A","B":"B","C":"C"},
       "correct_answer": "A",
@@ -65,7 +65,7 @@ function Question() {
       "status": 0,
     },
     "8": {
-      "question": "img/mc/question-list/q8.png",
+      "question": "XXXXX XXXXX XXX XXXXXXX?",
       "answer_txt": "<p>Yes / No</p>",
       "answers": {"Yes":"Yes","No":"No"},
       "correct_answer": "Yes",
@@ -74,7 +74,7 @@ function Question() {
       "status": 0,
     },
     "9": {
-      "question": "img/mc/question-list/q9.png",
+      "question": "XXXXX XXXXX XXX XXXXXXX?",
       "answer_txt": "<p>A. dummy text</p><p>B. dummy text</p><p>C. dummy text</p>",
       "answers": {"A":"A","B":"B","C":"C"},
       "correct_answer": "A",

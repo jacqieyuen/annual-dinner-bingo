@@ -1,29 +1,35 @@
 // Constructor
 function Player() {
   this.players_list = {
-    "p1": {
-      "player_id": "p1",
-      "player_name": "Table 1",
-      "token": "abc",
-      "socket_id": null,
-      "history": null
-    },
-    "p2": {
-      "player_id": "p2",
-      "player_name": "Table 2",
-      "token": "abc",
-      "socket_id": null,
-      "history": null
-    },
-    "p3": {
-      "player_id": "p3",
-      "player_name": "Table 3",
-      "token": "abc",
-      "socket_id": null,
-      "history": null
-    }
+    // "p1": {
+    //   "player_id": "p1",
+    //   "player_name": "Table 1",
+    //   "token": "abc",
+    //   "socket_id": null,
+    //   "history": null
+    // },
+    // "p2": {
+    //   "player_id": "p2",
+    //   "player_name": "Table 2",
+    //   "token": "abc",
+    //   "socket_id": null,
+    //   "history": null
+    // },
+    // "p3": {
+    //   "player_id": "p3",
+    //   "player_name": "Table 3",
+    //   "token": "abc",
+    //   "socket_id": null,
+    //   "history": null
+    // }
   };
-
+  for (i = 0; i<=10; i++) {
+    this.players_list["p" + i] = {
+      "player_id": "p" + i,
+      "player_name": "Table " + i, 
+      "socket_id": null,
+      "history": null}
+  }
 
   function getRandomBoard(){
     var history_temp = {
@@ -88,7 +94,6 @@ Player.prototype.unbindSocket = function(player_id) {
 Player.prototype.updateAnswer = function(player_id, question_id, answer) {
   this.players_list[player_id]["history"][question_id]["answer"] = answer;
 };
-
 //login
 Player.prototype.login = function(player_id, socket_id, kick_current_user) {
 
