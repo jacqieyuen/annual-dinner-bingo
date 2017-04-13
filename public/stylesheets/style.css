@@ -1,5 +1,5 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font: 13px Helvetica, Arial; color: #CBEFEC; text-shadow: 0px 0px 15px #00FFFF; }
+body { font: 13px Helvetica, Arial; color: #CBEFEC; text-shadow: 0px 0px 15px #00FFFF; overflow: hidden; }
 
 /*helper style*/
 .full-screen-absolute { position: absolute; top: 0; bottom: 0; left: 0; right: 0;}
@@ -55,7 +55,7 @@ body { font: 13px Helvetica, Arial; color: #CBEFEC; text-shadow: 0px 0px 15px #0
 
 /*mc site style*/
 #host {
-    margin-top: -25%;
+    margin-top: -22%;
     height: 45%;
     display: flex;
     flex-direction: column;

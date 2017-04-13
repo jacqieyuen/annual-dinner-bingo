@@ -1,7 +1,7 @@
 $(function () {
   var questions;
   // $("#question_content").hide();
-  $("#host-logo").hide();
+  $("#host").hide();
 
   var socket = io();
   // Host Get Info.
@@ -62,6 +62,6 @@ $(function () {
   $("header").click(function(){
     $(this).addClass("hidden");
     $("#host").fadeIn().removeClass("hidden");
-    $("#host-logo").show();
+    $("#host").show();
   })
 });

@@ -1,13 +1,13 @@
 extends ./layouts/layout
 block mc
-  #shadow(style='background-color: blue; box-shadow: 0 52px 107px 101px blue; height: 31%;')
+  #shadow(style='background-color: black; box-shadow: 0 52px 107px 101px black; height: 31%;')
   video#bgvid( playsinline='', autoplay='', muted='', loop='')
     source(src='video/11748833.mp4', type='video/mp4')
   header.mc-board-header
     img#starter-host-logo(src="img/title2.png")
 
   //- #notification
-  #host.hidden
+  #host
     img#host-logo(src="img/title2.png")
     #question_content
       img#question_txt(src="img/mc/question-list/start.png")  
