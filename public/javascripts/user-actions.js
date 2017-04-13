@@ -15,18 +15,21 @@ $(function () {
   // Show error when login fail
   //changed to alert page
   socket.on('login fail', function(msg){
-      $(".start").fadeOut().addClass("hidden");
+    // console.log("login fail: " + msg);
+    // $('#notification').html('').append('<span>'+msg+'</span>');
+    // $('#login').fadeIn();
+    $(".start").fadeOut().addClass("hidden");
       $('#notification').fadeIn().removeClass("hidden");
       $("#notification .small-btn").click(function(){
         socket.emit('login', player_id, true);
       })
   });
 
-  // $('form').submit(function(){
-  //   // Submit the login by FORM
-  //   socket.emit('login', $('#p').val(), $('#t').val());
-  //   return false;
-  // });
+  $('form').submit(function(){
+    // Submit the login by FORM
+    socket.emit('login', $('#p').val(), $('#t').val());
+    return false;
+  });
 
   // Login success, show the player history.
   socket.on('login success', function(data){
@@ -55,31 +58,38 @@ $(function () {
     var options = data.answers,
         options_values,
         options_keys;
-    for(q in data){
-      temp_qs = data[q]["status"];
-      $('.question-box[data-qid="'+q+'"] > .status').attr("status", temp_qs);
-    }
+    $('.question-box[data-qid="'+ id +'"] > .status').attr("status", data.status);
     $(".answer").attr("data-qid", id)
     // console.log(data);
     //if a question is being activated
     if (data.status == "1"){
       //reset options
       $(".options").html("");
+      $(".question").addClass("playing").find(".question-box[data-qid='" + id + "']").addClass("circle");
+      $(".backgorund2").fadeIn().removeClass("hidden");
       options_values = Object.values(options);
       options_values.map(function(value, id){
-        var str = "<div><input type='radio' name='answer' id='answer_" + value + "'/><label for='answer_" + value + "' class='flex-align-center'>" + value + "</label></div>"
+        var str = "<div><input type='radio' name='answer' id='answer_" + value + "' value='" + value + "'/><label for='answer_" + value + "' class='flex-align-center'><img src='../img/2x" + value + ".png'</label></div>"
         $(".options").append(str);
       });
       $(".answer").fadeIn().removeClass("hidden");
     //if a question is finished
     } else if ( data.status == "2"){
       //hide the buttons
-      var player_answer = $("input:checked").next("label").html();
-      $(".answer").attr("data-qid", "");
+      $(".backgorund2").fadeOut().addClass("hidden")
+      $(".question").removeClass("playing").find(".question-box[data-qid='" + id + "']").removeClass("circle");;
+      var player_answer = $("input:checked").val();
+      console.log($("input:checked"))
       $(".answer").fadeOut().addClass("hidden").find(".options").html("");
+      $(".answer").attr("data-qid", "");
       //Circle the question no. if players answer it right
       if ( player_answer == data.correct_answer){
         $(".question-box[data-qid='" + id + "']").attr("bingo", true);
+        $(".message img").attr("src","../img/user/correct.png");
+        $(".message p").text("Your table hit a Bingo! tryto get a row of it!");
+      }else{
+        $(".message img").attr("src","../img/user/wrong.png");
+        $(".message p").text("looks like your table didtn't get the Bingo");
       }
     }
   });
@@ -104,19 +114,22 @@ $(function () {
       player_history.push(Object.values(data)[0])
     })
     //check tic tac toe
+    console.log(player_history)
     calculateWinner(player_history) ? socket.emit("player wins bingo") : null
   })
 
   //When the game ends
   socket.on("end game", function(){
-    $("#play").html(" ").text("End Game")
+    $(".start").removeClass("border").text("Enjoy the prize and let's get crazy tonight!");
+    $("#play").fadeOut().addClass("hidden");
+    $("header").fadeIn().removeClass("hidden").css("display","flex");
   })
 
   // Submit a answer
   $('.submit').on("click", function(){
     if(!$(this).parents(".answer").hasClass("hidden")){
       if ($("input:checked").length > 0){
-        var value = $("input:checked").next("label").html();
+        var value = $("input:checked").val();
         var question_id = $(".answer").attr("data-qid");
         socket.emit('update answer', question_id, value);
       }

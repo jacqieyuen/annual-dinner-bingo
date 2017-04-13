@@ -1,17 +1,15 @@
 extends ./layouts/layout
 block mc
-  #shadow(style='background-color: blue; box-shadow: 0 52px 107px 101px blue; height: 31%;')
-  video#bgvid( playsinline='', autoplay='', muted='', loop='')
-    source(src='video/11748833.mp4', type='video/mp4')
-  header.mc-board-header
-    img#starter-host-logo(src="img/title2.png")
-
-  //- #notification
+  header
+    Welcome message
+    #notification
   #host.hidden
-    img#host-logo(src="img/title2.png")
     #question_content
-      img#question_txt(src="img/mc/question-list/start.png")  
-    ul.question
+      h2 Question
+        span#question_no
+      p#question_txt
+      p#answer_txt
+    ul.question.full-screen-absolute
       - var n = 0
       while n < 9
         - n++

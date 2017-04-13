@@ -19,12 +19,9 @@ module.exports = function(io){
 
   	var socket_id = socket.id;
   	console.log(socket.id + ': connected');
-
-
   	// Player login authentication
   	socket.on('login', function(player_id, kick_current_user){
   	  var playerLogin = Player.login(player_id, socket_id, kick_current_user);
-      
   	  if(!playerLogin.success){
   	  	// Login fail and return the error message
         //changed to show kill previous session alert
@@ -122,12 +119,13 @@ module.exports = function(io){
     //Players alert host when win  Bingo
     socket.on("player wins bingo", function(){
       //Set the maximum limit for the game
-      if (winner.length <= 1) {
-        winner.push(socket_ids[socket.id]['player_id']);
-        winner.length == 1 ? io.emit("end game") : null;
-      } else {
-        io.emit("end game");
-      }
+      io.emit("end game");
+      // if (winner.length <= 1) {
+      //   winner.push(socket_ids[socket.id]['player_id']);
+      //   winner.length == 1 ? io.emit("end game") : null;
+      // } else {
+      //   io.emit("end game");
+      // }
     })
 
   });
