@@ -1,5 +1,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
 body { font: 13px Helvetica, Arial; color: #CBEFEC; text-shadow: -1px 0px 15px rgba(203,239,236,0.4), 0px 1px 15px rgba(203,239,236,0.4), 1px 0px 15px rgba(203,239,236,0.4), 0px -1px 15px rgba(203,239,236,0.4); }
+
 
 /*helper style*/
 .full-screen-absolute { position: absolute; top: 0; bottom: 0; left: 0; right: 0;}
@@ -52,3 +54,64 @@ body { font: 13px Helvetica, Arial; color: #CBEFEC; text-shadow: -1px 0px 15px r
     .title { width: 65%;}
     .start { width: 60%; margin: 10% auto; }
 }
+
+/*mc site style*/
+#host {
+    margin-top: -22%;
+    height: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+#host #question_content { text-align: center;}
+#host .question { font-size: 50px; top: 50%; bottom: 40%;}
+#host .question .question-box { font-weight: 700; width: 5%; cursor: pointer; }
+video { 
+    position: fixed;
+    top: 83%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
+ /*background: url('//demosthenes.info/assets/images/polina.jpg') no-repeat;*/
+    background-size: cover;
+    transition: 1s opacity;
+    /*opacity: 0.8;*/
+}
+
+header.mc-board-header {
+   /* background-image: url(../img/mc/start-bg.jpg);
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-size: cover;*/
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    z-index: 100;
+}
+
+#starter-host-logo {
+    position: fixed;
+    top: -15%;
+    left: 30%;
+    width: 39%;
+}
+
+#host-logo {
+    position: fixed;
+    top: -6%;
+    left: 2%;
+    width: 15%;
+}
+
+#host ul {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 10%
+}
+
+/*circle mc*/
+

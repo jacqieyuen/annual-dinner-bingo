@@ -1,9 +1,14 @@
 extends ./layouts/layout
 block mc
-  header
-    Welcome message
-    #notification
-  #host.hidden
+  #shadow(style='background-color: black; box-shadow: 0 52px 107px 101px black; height: 31%;')
+  video#bgvid( playsinline='', autoplay='', muted='', loop='')
+    source(src='video/11748833.mp4', type='video/mp4')
+  header.mc-board-header
+    img#starter-host-logo(src="img/title2.png")
+
+  //- #notification
+  #host
+    img#host-logo(src="img/title2.png")
     #question_content
       h2 Question
         span#question_no
