@@ -1,0 +1,30 @@
+extends ./layouts/layout
+block user
+  header.full-screen-absolute.flex-align-center
+    div
+      img.title(src="./img/title.png")
+      #notification.hidden
+        p Beware! Pressing button below will kick out current user.
+        .border.small-btn
+          img(src="../img/ok.png")
+      .start.border
+        img(src="../img/user/start.png")
+  #play.hidden
+    #player_info Player:
+      span#player_name
+    .message
+      img(src="../img/user/start2.png")
+      p Try to get a row of numbers in order for your table to win this challenge
+    - var n = 1;
+    ul.question
+      while n <= 9
+        - n++
+        li.question-box.flex-align-center.faded-border
+          span.status(status="0")
+    .answer.hidden
+      .instruction
+        img(src="../img/user/please_select.png")
+      .options
+      .submit.border.small-btn
+        img(src="../img/submit.png")
+  script(src='javascripts/user-actions.js')
