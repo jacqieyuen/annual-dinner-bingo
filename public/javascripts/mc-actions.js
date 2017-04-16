@@ -76,10 +76,13 @@
     },
 
     questionFinished  : function (socket){
-      socket.on('question status updated', function(data){
-        if (data[0]){
-          var qstatus = data[0].status;
-          var qid = data[1];
+      socket.on('question status updated', function(data, id){
+        // console.log(id);
+        // console.log(data)
+        if (data.status == 2){
+          var qstatus = data.status;
+          var qid = id;
+          // console.log(qid);
           $('.question_mc_box[data-qid="'+qid+'"] > .status').attr("status", qstatus);
           $('.question_mc_box[data-qid="'+qid+'"]').find(".circle").hide();
         };
