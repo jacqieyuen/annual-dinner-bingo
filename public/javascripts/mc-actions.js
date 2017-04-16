@@ -1,3 +1,10 @@
+// functions
+
+
+// initiate functions
+
+
+
 $(function () {
   var questions;
   // $("#question_content").hide();
