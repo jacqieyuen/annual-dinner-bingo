@@ -1,74 +1,67 @@
-// functions
+var questions;
+// FUNCTIONS
 
+McActions = {
+  getQuestions : function (socket){
+      socket.emit('host getlist');
+      socket.on('host getlist', function(data){
+        console.log(data);
+        questions = data.questions;
+        qstatus = data.qstatus;
+
+        for(q in qstatus){
+          temp_qs = qstatus[q]["status"];
+          $('.question-box[data-qid="'+q+'"] > .status').attr("status", temp_qs);
+        }
+      });
+    },
+  hideLandingPage : function (){
+      $("header").click(function(){
+        $(this).hide();
+        $("#host").fadeIn().show();
+      });
+    },
+  questionActiveReq : function (socket){
+    $('.question-box').click(function(){
+        var question_id = $(this).attr("data-qid");
+        var question = $(this).find('.status')
+        var question_status = question.attr("status");
+        if(question_status == "0"){
+          socket.emit('question active request', question_id);
+        }
+      });
+    },
+  questionActivated : function (socket){
+      socket.on('active question', function(question_id){
+        $("#question_txt").attr("src", questions[question_id]["question"]);
+        $('.question-box[data-qid="'+question_id+'"] > .status').attr("status", "1");
+        $("#question_content").fadeIn();
+      });
+    },
+  questionFinished : function (socket){
+      socket.on('question status updated', function(data){
+        if (data[0]){
+          var qstatus = data[0].status;
+          var qid = data[1];
+          $('.question-box[data-qid="'+qid+'"] > .status').attr("status", qstatus);
+        };
+      });
+    },
+  gameEnd : function (socket){
+    socket.on("end game", function(){
+      $("#host").html("").text("End Game")
+    })
+  }
+}
 
 // initiate functions
-
-
-
 $(function () {
-  var questions;
-  // $("#question_content").hide();
-  $("#host-logo").hide();
-
+  $("#host").hide();
   var socket = io();
-  // Host Get Info.
-  socket.emit('host getlist');
-  socket.on('host getlist', function(data){
-    console.log(data);
-    questions = data.questions;
-    qstatus = data.qstatus;
-
-    for(q in qstatus){
-      temp_qs = qstatus[q]["status"];
-      $('.question-box[data-qid="'+q+'"] > .status').attr("status", temp_qs);
-    }
-  });
-
-
-  // send a question active request
-  $('.question-box').click(function(){
-    // var display_box = $(this).find("span");
-    // var value = display_box.html();
-    var question_id = $(this).attr("data-qid");
-    var question = $(this).find('.status')
-    var question_status = question.attr("status");
-    if(question_status == "0"){
-      socket.emit('question active request', question_id);
-    }
-  });
-
-
-  // A question actived
-  socket.on('active question', function(question_id){
-
-    $('#question_no').html(question_id);
-    $("#question_txt").attr("src", questions[question_id]["question"]);
-    $('#answer_txt').html(questions[question_id]["answer_txt"]);
-    $('.question-box[data-qid="'+question_id+'"] > .status').attr("status", "1");
-    $("#question_content").fadeIn();
-
-
-  });
-
-  // Question finished
-  socket.on('question status updated', function(data){
-    qstatus = data;
-    for(q in qstatus){
-      temp_qs = qstatus[q]["status"];
-      $('.question-box[data-qid="'+q+'"] > .status').attr("status", temp_qs);
-    }
-
-  });
-
-  //When the game ends
-  socket.on("end game", function(){
-    $("#host").html("").text("End Game")
-  })
-
-  //hide the title
-  $("header").click(function(){
-    $(this).addClass("hidden");
-    $("#host").fadeIn().removeClass("hidden");
-    $("#host-logo").show();
-  })
+  McActions.getQuestions(socket)
+  McActions.hideLandingPage();
+  McActions.questionActiveReq(socket);
+  McActions.questionActivated(socket);
+  McActions.questionFinished(socket);
+  McActions.gameEnd(socket);
 });

@@ -1,5 +1,5 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font: 13px Helvetica, Arial; color: #CBEFEC; text-shadow: 0px 0px 15px #00FFFF; }
+body { font: 13px Helvetica, Arial; color: #CBEFEC; text-shadow: 0px 0px 15px #00FFFF; overflow: hidden;}
 
 /*helper style*/
 .full-screen-absolute { position: absolute; top: 0; bottom: 0; left: 0; right: 0;}
@@ -15,7 +15,7 @@ body { font: 13px Helvetica, Arial; color: #CBEFEC; text-shadow: 0px 0px 15px #0
 .question .question-box[bingo] { color: #fff; content: ""; position: absolute; background-image: url(../img/circle2.png); background-size: cover; background-size: 60% 60%; background-position: center; background-repeat: no-repeat;}
 .question .question-box .status[status="0"] { color: #fff; text-shadow: -1px 0px 1px #00FFFF, 0px 1px 1px #00FFFF, 1px 0px 1px #00FFFF, 0px -1px 1px #00FFFF;}
 .question .question-box.circle { content: ""; position: absolute; background-image: url(../img/circle.png); background-size: cover; background-size: 60% 60%; background-position: center; background-repeat: no-repeat;}
-.question .question-box .status[status="1"] { text-shadow: -1px 0px 1px yellow, 0px 1px 1px #00FFFF, 1px 0px 1px #00FFFF, 0px -1px 1px #00FFFF; }
+.question .question-box .status[status="1"] { text-shadow: -1px 0px 1px #00FFFF, 0px 1px 1px #00FFFF, 1px 0px 1px #00FFFF, 0px -1px 1px #00FFFF; color: yellow;}
 .question .question-box .status[status="2"] { color: gray; text-shadow: none; }
 .question.playing .question-box .status:not([status="1"]) { color: rgba(203,239,236,0.4); text-shadow: none; }
 
@@ -64,7 +64,7 @@ body { font: 13px Helvetica, Arial; color: #CBEFEC; text-shadow: 0px 0px 15px #0
 #host #question_content { text-align: center;}
 #host .question { font-size: 50px; top: 50%; bottom: 40%;}
 #host .question .question-box { font-weight: 700; width: 5%; cursor: pointer; }
-video { 
+video {
     position: fixed;
     top: 83%;
     left: 50%;
@@ -83,7 +83,7 @@ video {
 header.mc-board-header {
    /* background-image: url(../img/mc/start-bg.jpg);
     background-repeat: no-repeat;
-    background-position: center; 
+    background-position: center;
     background-size: cover;*/
     height: 100vh;
     width: 100vw;

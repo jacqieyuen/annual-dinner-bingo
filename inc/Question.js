@@ -3,7 +3,6 @@ function Question() {
   this.questions = {
     "1": {
       "question": "img/mc/question-list/q1.png",
-      "answer_txt": "<p>A. dummy text</p><p>B. dummy text</p><p>C. dummy text</p>",
       "answers": {"A":"A","B":"B","C":"C"},
       "correct_answer": "A",
       "limit": 5,

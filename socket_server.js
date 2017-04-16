@@ -24,7 +24,7 @@ module.exports = function(io){
   	// Player login authentication
   	socket.on('login', function(player_id, kick_current_user){
   	  var playerLogin = Player.login(player_id, socket_id, kick_current_user);
-      
+
   	  if(!playerLogin.success){
   	  	// Login fail and return the error message
         //changed to show kill previous session alert
@@ -104,10 +104,10 @@ module.exports = function(io){
   		  		clearInterval(timer1);
 
   		  		console.log("Finish Question " + question_id);
-  		  		Question.finishQuestion(question_id);
+  		  		Question.finishQuestion(question_id);1
   		  		activing = {"question_id": null,"expiryTime": null};
 
-  		  		io.emit('question status updated', Question.questions[question_id], question_id);
+  		  		io.emit('question status updated', [Question.questions[question_id], question_id]);
   		  	}
   		  },1000);
 
