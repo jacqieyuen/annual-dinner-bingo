@@ -89,28 +89,33 @@ module.exports = function(io){
 
   		  activing = Question.activeQuestion(question_id);
   		  var expTime = activing.expiryTime.getTime();
+        console.log(expTime);
 
 
+  		  // var timer1 = setInterval(function() {
+  		  // 	var nowTime = new Date().getTime();
+  		  // 	var theExpTime = expTime;
 
-  		  var timer1 = setInterval(function() {
-  		  	var nowTime = new Date().getTime();
-  		  	var theExpTime = expTime;
+  		  // 	// console.log(activing.expiryTime.getTime());
+  		  // 	// console.log(nowTime);
+  		  // 	console.log("Question "+question_id+" activing");
 
-  		  	// console.log(activing.expiryTime.getTime());
-  		  	// console.log(nowTime);
-  		  	console.log("Question "+question_id+" activing");
+  		  // 	if(nowTime>=theExpTime){
+  		  // 		clearInterval(timer1);
 
-  		  	if(nowTime>=theExpTime){
-  		  		clearInterval(timer1);
+  		  // 		console.log("Finish Question " + question_id);
+  		  // 		Question.finishQuestion(question_id);1
+  		  // 		activing = {"question_id": null,"expiryTime": null};
 
-  		  		console.log("Finish Question " + question_id);
-  		  		Question.finishQuestion(question_id);1
-  		  		activing = {"question_id": null,"expiryTime": null};
-
-  		  		io.emit('question status updated', Question.questions[question_id], question_id);
-  		  	}
-  		  },1000);
-
+  		  // 		io.emit('question status updated', Question.questions[question_id], question_id);
+  		  // 	}
+  		  // },1000);
+        socket.on('end question', function(){
+          console.log("Finish Question: " + question_id);
+          Question.finishQuestion(question_id);1
+          activing = {"question_id": null,"expiryTime": null};
+          io.emit('question status updated', Question.questions[question_id], question_id);
+        });
 
   		  socket.emit('active question', question_id);
   		  io.emit('question status updated', Question.questions[question_id], question_id)
@@ -118,6 +123,7 @@ module.exports = function(io){
   		}
 
   	});
+
 
     //Players alert host when win  Bingo
     socket.on("player wins bingo", function(){

@@ -12,8 +12,8 @@
     55                : 7,
     56                : 8,
     57                : 9,
-    66                : 'b',
-    78                : 'n',
+    98                : 'b',
+    110                : 'n',
     190               : 'period'
   }
 // Functions
@@ -34,17 +34,21 @@
     },
 
     hideLandingPage   : function (){
-      $("header").click(function(){
-        $(this).hide();
-        $("#host").fadeIn().show();
+      $(document).on("keypress", function(e){
+        var val = e.which;
+        if (val === 32){
+          $(".mc_board_header").hide();
+          $("#host").fadeIn().show();
+        }
       });
     },
 
     questionActiveReq : function (socket){
       $(document).on("keypress", function(e) {
         var val = e.which;
+        var question_id = '';
         if (val === 49 || val === 50 || val === 51 || val === 52 || val === 53 || val === 54 || val === 55 || val === 56 || val === 57){
-          var question_id = keyboardValues[val];
+          question_id = keyboardValues[val];
           // console.log(question_id);
           var question = $(".question_mc_box[data-qid='" +question_id+"']").find(".status");
           var question_status = question.attr("status");
@@ -55,16 +59,6 @@
           };
         }
       });
-      // $('.question-box').click(function(){
-      //   var question_id = $(this).attr("data-qid");
-      //   var question = $(this).find('.status')
-      //   console.log(question);
-      //   var question_status = question.attr("status");
-      //   console.log(question_status);
-      //   if(question_status == "0"){
-      //     socket.emit('question active request', question_id);
-      //   }
-      // });
     },
 
     questionActivated : function (socket){
@@ -72,6 +66,37 @@
         $("#show_mc_question").attr("src", questions[question_id]["question"]);
         $('.question_mc_box[data-qid="'+question_id+'"] > .status').attr("status", "1");
         $("#question_content").fadeIn();
+      });
+    },
+
+    pauseBingo : function (){
+      $(document).on("keypress", function(e) {
+        var val = e.which;
+        // console.log(val);
+        if (val === 98) {
+          $("#show_mc_question").attr("src", "img/Potato.png");
+        };
+      });
+    },
+
+    pauseSelectQ : function (){
+      $(document).on("keypress", function(e) {
+        var val = e.which;
+        // console.log(val);
+        if (val === 110) {
+          $("#show_mc_question").attr("src", "img/Potato.png");
+        };
+      });
+    },
+
+    endQuestion : function (socket){
+      $(document).on("keypress", function(e) {
+        var val = e.which;
+        // console.log(val);
+        if (val === 46) {
+          socket.emit('end question');
+          // console.log(val);
+        };
       });
     },
 
@@ -104,6 +129,9 @@
         MC_Actions.hideLandingPage();
         MC_Actions.questionActiveReq(socket);
         MC_Actions.questionActivated(socket);
+        MC_Actions.endQuestion(socket);
+        MC_Actions.pauseBingo();
+        MC_Actions.pauseSelectQ();
         MC_Actions.questionFinished(socket);
         MC_Actions.gameEnd(socket);
       });
