@@ -1,8 +1,8 @@
 extends ./layouts/layout
 block mc
-  #shadow
+  //- #shadow
   video#bgvid( playsinline='', autoplay='', muted='', loop='')
-    source(src='video/11748833.mp4', type='video/mp4')
+    source(src='video/demo.mp4', type='video/mp4')
   header.mc_board_header
     img#starter_host_logo(src="img/title2.png")
   #host
@@ -15,7 +15,7 @@ block mc
         - var n = 0
         while n < 9
           - n++
-          li.question_mc_box(data-qid=n)
-            .mc-circle
+          li.question_mc_box.circle(data-qid=n)
+            //- .mc-circle
             span.status(status="0")= n
   script(src='javascripts/mc-actions.js')
