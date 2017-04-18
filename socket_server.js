@@ -42,6 +42,18 @@ module.exports = function(io){
 
   	});
 
+    socket.on('check name', function(player_id){
+      if(!Player.getInfo(player_id)["player_name"]){
+        socket.emit('has name', false)
+      }else {
+        socket.emit('has name', true)
+      }
+    })
+
+    socket.on('name', function(player_id, name){
+      Player.getInfo(player_id)["player_name"] = name;
+    })
+
   	// Player disconnect and unbind socket id from the player
   	socket.on('disconnect', function(){
   	  var socket_id = socket.id;
