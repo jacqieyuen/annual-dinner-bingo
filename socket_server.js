@@ -116,14 +116,14 @@ module.exports = function(io){
   		  activing = Question.activeQuestion(question_id);
   		  // var expTime = activing.expiryTime.getTime();
         // console.log(expTime);
-        
+
   		  socket.emit('active question', question_id);
   		  io.emit('question status updated', Question.questions[question_id], question_id);
   		}
   	});
     socket.on('end question', function(){
           console.log("Finish Question: " + question_ID);
-          Question.finishQuestion(question_ID);1
+          Question.finishQuestion(question_ID);
           activing = {"question_id": null,"expiryTime": null};
           io.emit('question status updated', Question.questions[question_ID], question_ID);
         });
