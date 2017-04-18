@@ -77,7 +77,7 @@
           var permission = data;
           if (permission=== true) {
             var val = e.which;
-            console.log(val);
+            // console.log(val);
             var question_id = '';
             if (val === 49 || val === 50 || val === 51 || val === 52 || val === 53 || val === 54 || val === 55 || val === 56 || val === 57){
               question_id = keyboardValues[val];
