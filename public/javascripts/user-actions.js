@@ -22,6 +22,7 @@ $(function () {
         }
       })
     } else {
+      socket.emit('login', player_id);
       $("#naming").addClass("hidden");
       $("#start").removeClass("hidden");
     }
@@ -50,6 +51,7 @@ $(function () {
   socket.on('login success', function(data){
     var player_history = Object.values(data.player_history);
     if(data.player_name) {
+      console.log("asdfsdaf")
       $("#start .start").click(function(){
         $(".player-name").text(data.player_name);
         console.log(data.player_history);
@@ -61,7 +63,11 @@ $(function () {
         $(".background2").removeClass("hidden");
         //generate board order by position
         player_history.map( function(data, id){
-          $(".question-box:nth-child(" + data["position"] + ")").attr("data-qid", id+1).children().text(id+1)
+          $(".question-box:nth-child(" + data["position"] + ")").attr("data-qid", id+1).children().text(id+1).attr("status", data.status)
+          if(data.status == 1){
+            console.log($("li[data-qid='" + parseInt(id)+1 + "']"))
+            $("li[data-qid='" + (parseInt(id)+1) + "']").addClass("circle")
+          }
           if (data["answer"] == true){
             $(".question-box[data-qid='" + parseInt(id+1) + "']").attr("bingo", true);
           }
@@ -80,6 +86,7 @@ $(function () {
     // console.log(data);
     //if a question is being activated
     if (data.status == "1"){
+      socket.emit("update player question status", player_id, id, 1)
       //reset options
       $(".options").html("");
       $(".question").addClass("playing").find(".question-box[data-qid='" + id + "']").addClass("circle");
@@ -91,6 +98,7 @@ $(function () {
       $(".answer").fadeIn().removeClass("hidden");
     //if a question is finished
     } else if ( data.status == "2"){
+      socket.emit("update player question status", player_id, id, 2)
       //hide the buttons
       $(".question").removeClass("playing").find(".question-box[data-qid='" + id + "']").removeClass("circle");
       var player_answer = $("input:checked").val();

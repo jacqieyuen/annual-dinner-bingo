@@ -54,6 +54,13 @@ module.exports = function(io){
       Player.getInfo(player_id)["player_name"] = name;
     })
 
+    socket.on('update player question status', function(player_id, q_id, status){
+      if(status != undefined){
+        Player.getInfo(player_id)["history"][q_id.toString()]["status"] = status
+        // console.log(Player.getInfo(player_id)["history"])
+      }
+    })
+
   	// Player disconnect and unbind socket id from the player
   	socket.on('disconnect', function(){
   	  var socket_id = socket.id;
