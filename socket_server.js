@@ -12,6 +12,7 @@ module.exports = function(io){
   var activing = {"question_id": null,"expiryTime": null};
   var winner = [];
   var giftCounter = 10;
+  var question_ID = "";
 
   // console.log(players);
   // console.log(questions);
@@ -97,7 +98,6 @@ module.exports = function(io){
         array.push(Question.questions[""+x]["status"])
         // console.log(array);
       }
-
       console.log(array);
       console.log(!array.includes(1));
       if (!array.includes(1)){
@@ -108,47 +108,27 @@ module.exports = function(io){
         console.log("this is not active: "+permission);
       }
       console.log(permission);
-      socket.emit('status validator data', permission);
+      socket.emit('status validator data', permission, array);
     })
         // console.log(Question.questions["1"]["status"]);
   	// Host request to active a question
   	socket.on('question active request', function(question_id){
-
+      question_ID = question_id;
   		if(activing.question_id == null){
-
   		  activing = Question.activeQuestion(question_id);
-  		  var expTime = activing.expiryTime.getTime();
-        console.log(expTime);
-  		  // var timer1 = setInterval(function() {
-  		  // 	var nowTime = new Date().getTime();
-  		  // 	var theExpTime = expTime;
-
-  		  // 	// console.log(activing.expiryTime.getTime());
-  		  // 	// console.log(nowTime);
-  		  // 	console.log("Question "+question_id+" activing");
-
-  		  // 	if(nowTime>=theExpTime){
-  		  // 		clearInterval(timer1);
-
-  		  // 		console.log("Finish Question " + question_id);
-  		  // 		Question.finishQuestion(question_id);1
-  		  // 		activing = {"question_id": null,"expiryTime": null};
-
-  		  // 		io.emit('question status updated', Question.questions[question_id], question_id);
-  		  // 	}
-  		  // },1000);
-        socket.on('end question', function(){
-          console.log("Finish Question: " + question_id);
-          Question.finishQuestion(question_id);1
-          activing = {"question_id": null,"expiryTime": null};
-          io.emit('question status updated', Question.questions[question_id], question_id);
-        });
-
+  		  // var expTime = activing.expiryTime.getTime();
+        // console.log(expTime);
+        
   		  socket.emit('active question', question_id);
   		  io.emit('question status updated', Question.questions[question_id], question_id);
   		}
   	});
-
+    socket.on('end question', function(){
+          console.log("Finish Question: " + question_ID);
+          Question.finishQuestion(question_ID);1
+          activing = {"question_id": null,"expiryTime": null};
+          io.emit('question status updated', Question.questions[question_ID], question_ID);
+        });
 
     //Players alert host when win  Bingo
     socket.on("player wins bingo", function(){

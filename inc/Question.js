@@ -112,9 +112,9 @@ Question.prototype.activeQuestion = function(question_id) {
 
   // console.log(question_id);
     this.questions[question_id]["status"] = 1;
-    this.questions[question_id]["expiry"] = expiryTime;
+    // this.questions[question_id]["expiry"] = expiryTime;
 
-    return {"question_id": question_id,"expiryTime":expiryTime};
+    return {"question_id": question_id};
 
     // console.log(this.questions);
 };
