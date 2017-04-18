@@ -15,7 +15,7 @@ block mc
         - var n = 0
         while n < 9
           - n++
-          li.question_mc_box.circle(data-qid=n)
+          li.question_mc_box(data-qid=n)
             //- .mc-circle
             span.status(status="0")= n
   script(src='javascripts/mc-actions.js')

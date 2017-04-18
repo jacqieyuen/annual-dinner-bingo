@@ -25,9 +25,9 @@ Functions to add:
   - game end button and image.
 
   After meeting: 
-    - upon refresh, if question is still active, add animation
+    o upon refresh, if question is still active, add animation
     - presents confirm icon
-    - import fonts 
-    - no shadow, change to outline 
-    - add answers to 8 & 9
+    o import fonts 
+    o no shadow, change to outline 
+    o add answers to 8 & 9
     - end game button

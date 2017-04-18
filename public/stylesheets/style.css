@@ -1,10 +1,16 @@
+@font-face {
+    font-family: accentureFonts;
+    src: url(../fonts/Graphik-Medium.ttf);
+}
+
 * {
-    margin              : 0;
-    padding             : 0;
-    box-sizing          : border-box;
+    margin             : 0;
+    padding            : 0;
+    box-sizing         : border-box;
 }
 body {
-    font               : 13px Helvetica, Arial;
+    font-family        : accentureFonts;
+    font-size          : 13px;
     color              : #CBEFEC;
     text-shadow        : -1px 0px 15px rgba(203,239,236,0.4),
                          0px 1px 15px rgba(203,239,236,0.4),
@@ -70,11 +76,15 @@ video#bgvid {
 }
 
 #mc_q_wrapper {
-    height             : 55%;
+    height             : 55vh;
     display            : flex;
     flex-direction     : column;
     justify-content    : flex-end;
     align-items        : center;
+}
+
+#question_content img{
+    width              : 55vw;
 }
 
 #host #mc_q_wrapper ul {
@@ -83,10 +93,10 @@ video#bgvid {
     padding            : 0 10%;
     width              : 100vw;
     list-style         : none;
-    font-size          : 40px;
+    font-size          : 5vw;
 }
 
-#shadow {
+/*#shadow {
     position           : fixed;
     top                : 0;
     left               : 0;
@@ -95,23 +105,33 @@ video#bgvid {
     height             : 22%;
     width              : 100vw;
     z-index            : -50;
-}
+}*/
 
 .question_mc_box {
-    width              : 80px;
-    height             : 80px;
+    width              : 7vw;
+    height             : 7vw;
     display            : flex;
     justify-content    : center;
     align-items        : center;
     position           : relative;
 
 }
-.mc-circle{
+
+.question_mc_box span{
+    margin-top         : -13%;
+    text-shadow        : -1px 0px rgba(0,255,255,0.5),
+                         0px 1px rgba(0,255,255,0.5),
+                         1px 0px rgba(0,255,255,0.5),
+                         0px -1px rgba(0,255,255,0.5);
+}
+
+.mc-circle:before {
+    content            : ''; 
     position           : absolute;
-    width              : 80px;
-    height             : 80px;
-    border-radius      : 50px;
-    border             : dotted 10px #00FFFF;
+    width              : 7vw;
+    height             : 7vw;
+    border-radius      : 70%;
+    border             : dotted 0.6vw #00FFFF;
     animation          : spin 2s linear infinite;
 }
 

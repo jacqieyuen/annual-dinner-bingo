@@ -22,6 +22,7 @@
 // Functions
   var MC_Actions = {
 
+
     hideLandingPage: function (e){
         var val = e.which;
       // $(document).on("keypress", function(val){
@@ -32,6 +33,10 @@
 
       // });
     },
+
+    reEnterPage: function (){
+
+    }, 
 
     giftCounter: function (socket, e) {
       socket.on("giftCounter update", function(data){
@@ -71,8 +76,8 @@
         socket.on('status validator data', function(data, array){
           var permission = data;
           if (permission=== true) {
-            // console.log(val)
             var val = e.which;
+            console.log(val);
             var question_id = '';
             if (val === 49 || val === 50 || val === 51 || val === 52 || val === 53 || val === 54 || val === 55 || val === 56 || val === 57){
               question_id = keyboardValues[val];
@@ -81,9 +86,13 @@
               if(question_status == "0"){
                 socket.emit('question active request', question_id);
                 console.log(question_id);
-                $(".question_mc_box[data-qid='" +question_id+"']").find(".mc-circle").show();
+                $(".question_mc_box[data-qid='" +question_id+"']").addClass('mc-circle');
               };
             };
+          } else if (array.includes(1)) {
+            var num = array.indexOf(1)
+            var num = num + 1
+            $(".question_mc_box[data-qid='" +num+"']").addClass('mc-circle');
           };
           delete e.which;
           // console.log(val)
@@ -124,13 +133,27 @@
         };
     },
 
+    answerEight: function (e){
+        var val = e.which;
+        if (val === 48) {
+          $("#show_mc_question").attr("src", "img/mc/question-list/q8-answer.png");
+        };
+    },
+
+    answerNine: function (e){
+        var val = e.which;
+        if (val === 45) {
+          $("#show_mc_question").attr("src", "img/mc/question-list/q9-answer.png");
+        };
+    },
+
     questionFinished: function (socket){
       socket.on('question status updated', function(data, id){
         if (data.status == 2){
           var qstatus = data.status;
           var qid = id;
           $('.question_mc_box[data-qid="'+qid+'"] > .status').attr("status", qstatus);
-          $('.question_mc_box[data-qid="'+qid+'"]').find(".mc-circle").hide();
+          $('.question_mc_box[data-qid="'+qid+'"]').removeClass("mc-circle");
         };
       });
     },
@@ -144,14 +167,14 @@
     initGame          : function (){
       $(function () {
         $("#host").hide();
-        $(".mc-circle").hide();
+        // $(".mc-circle").hide();
         var socket        = io();
         $(document).off().on("keypress", function(e) {
           MC_Actions.getQuestions(socket)
           MC_Actions.hideLandingPage(e);
           MC_Actions.giftCounter(socket, e);
           MC_Actions.questionActiveReq(socket, e);
-          // delete e.which;
+          MC_Actions.answerEight(e)
           MC_Actions.questionActivated(socket, e);
           MC_Actions.endQuestion(socket, e);
           MC_Actions.pauseBingo(e);
