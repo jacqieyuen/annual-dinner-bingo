@@ -1,8 +1,14 @@
 extends ./layouts/layout
 block user
-  .backgorund2.hidden
+  .background2.hidden
+  .background3.hidden
   header.full-screen-absolute.flex-align-center
-    div
+    #naming
+      p Please input your table name below
+      input.border(type='text')
+      .border.small-btn
+        img(src="../img/ok.png")
+    #start.hidden
       img.title(src="./img/title.png")
       #notification.hidden
         p Beware! Pressing button below will kick out current user.
@@ -11,11 +17,11 @@ block user
       .start.border
         img(src="../img/user/start.png")
   #play.hidden
-    //- #player_info Player:
-      span#player_name
     .message
       img(src="../img/user/start2.png")
-      p Try to get a row of numbers in order for your table to win this challenge
+      p Win this challenge for 
+        span.player-name
+        |  by completing a row, column, or diagonal.
     - var n = 1;
     ul.question
       while n <= 9

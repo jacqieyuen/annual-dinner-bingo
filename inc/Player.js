@@ -26,7 +26,7 @@ function Player() {
   for (i = 0; i<=10; i++) {
     this.players_list["p" + i] = {
       "player_id": "p" + i,
-      "player_name": "Table " + i, 
+      "player_name": "", 
       "socket_id": null,
       "history": null}
   }

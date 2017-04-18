@@ -7,10 +7,25 @@ $(function () {
 
   if(player_id != ""){
     // Submit the login by GET Parameter
-    $("header .start").click(function(){
-      socket.emit('login', player_id);
-    })
+    socket.emit('check name', player_id)
   }
+
+  socket.on("has name", function(has_name){
+    if(!has_name){
+      $("#naming .small-btn").click(function(){
+        var name = $("#naming input").val();
+        if(name != "" && name != null) {
+          socket.emit('name', player_id, name);
+          socket.emit('login', player_id);
+          $("#naming").fadeOut().addClass("hidden");
+          $("#start").fadeIn().removeClass("hidden");
+        }
+      })
+    } else {
+      $("#naming").addClass("hidden");
+      $("#start").removeClass("hidden");
+    }
+  })
 
   // Show error when login fail
   //changed to alert page
@@ -18,11 +33,11 @@ $(function () {
     // console.log("login fail: " + msg);
     // $('#notification').html('').append('<span>'+msg+'</span>');
     // $('#login').fadeIn();
-    $(".start").fadeOut().addClass("hidden");
-      $('#notification').fadeIn().removeClass("hidden");
-      $("#notification .small-btn").click(function(){
-        socket.emit('login', player_id, true);
-      })
+    // $(".start").fadeOut().addClass("hidden");
+    //   $('#notification').fadeIn().removeClass("hidden");
+    //   $("#notification .small-btn").click(function(){
+    //     socket.emit('login', player_id, true);
+    //   })
   });
 
   $('form').submit(function(){
@@ -34,23 +49,25 @@ $(function () {
   // Login success, show the player history.
   socket.on('login success', function(data){
     var player_history = Object.values(data.player_history);
-    // $('#login').hide();
-    // $('#play').fadeIn();
-    // $('#notification').html('');
-    $("#player_name").html(data.player_name);
-    console.log(data.player_history);
-    console.log(data.questions_status);
+    if(data.player_name) {
+      $("#start .start").click(function(){
+        $(".player-name").text(data.player_name);
+        console.log(data.player_history);
+        console.log(data.questions_status);
 
-    // TODO: gen board order by position
-    $("header").fadeOut().addClass("hidden");
-    $("#play").fadeIn().removeClass("hidden");
-    //generate board order by position
-    player_history.map( function(data, id){
-      $(".question-box:nth-child(" + data["position"] + ")").attr("data-qid", id+1).children().text(id+1)
-      if (data["answer"] == true){
-        $(".question-box[data-qid='" + parseInt(id+1) + "']").attr("bingo", true);
-      }
-    })
+        // TODO: gen board order by position
+        $("header").fadeOut().addClass("hidden");
+        $("#play").fadeIn().removeClass("hidden");
+        $(".background2").removeClass("hidden");
+        //generate board order by position
+        player_history.map( function(data, id){
+          $(".question-box:nth-child(" + data["position"] + ")").attr("data-qid", id+1).children().text(id+1)
+          if (data["answer"] == true){
+            $(".question-box[data-qid='" + parseInt(id+1) + "']").attr("bingo", true);
+          }
+        })
+      })
+    }
   });
 
   // A question started or finished
@@ -66,7 +83,6 @@ $(function () {
       //reset options
       $(".options").html("");
       $(".question").addClass("playing").find(".question-box[data-qid='" + id + "']").addClass("circle");
-      $(".backgorund2").fadeIn().removeClass("hidden");
       options_values = Object.values(options);
       options_values.map(function(value, id){
         var str = "<div><input type='radio' name='answer' id='answer_" + value + "' value='" + value + "'/><label for='answer_" + value + "' class='flex-align-center'><img src='../img/2x" + value + ".png'</label></div>"
@@ -76,7 +92,6 @@ $(function () {
     //if a question is finished
     } else if ( data.status == "2"){
       //hide the buttons
-      $(".backgorund2").fadeOut().addClass("hidden")
       $(".question").removeClass("playing").find(".question-box[data-qid='" + id + "']").removeClass("circle");
       var player_answer = $("input:checked").val();
       $(".answer").fadeOut().addClass("hidden").find(".options").html("");

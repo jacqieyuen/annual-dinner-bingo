@@ -124,7 +124,7 @@ video#bgvid {
 .full-screen-absolute { position: absolute; top: 0; bottom: 0; left: 0; right: 0;}
 .flex-align-center { display: flex; justify-content: center; align-items: center; }
 .hidden { display: none; }
-.border { border: 1px solid #CBEFEC; box-shadow: 0px 0px 10px 1px #00FFFF, inset 0px 0px 10px 1px #00FFFF; }
+.border { border: 1px solid #CBEFEC; box-shadow: 0px 0px 5px #00FFFF, inset 0px 0px 5px #00FFFF; }
 #notification { margin: 10% auto; color: #f45b5b; text-shadow: 0px 0px 15px #FF0000;}
 #notification .border { width: 20%; border: 1px solid #f45b5b; box-shadow: 0px 0px 10px 1px #FF0000, inset 0px 0px 10px 1px #FF0000; margin: 5% auto 0;}
 .faded-border {box-shadow: 0px 0px 5px 1px rgba(0,255,255,0.5), inset 0px 0px 5px 1px rgba(0,255,255,0.5)}
@@ -139,10 +139,13 @@ video#bgvid {
 .question.playing .question-box .status:not([status="1"]) { color: rgba(299,299,299,0.4); text-shadow: none;}
 
 /*user site style*/
+#naming { width: 100%;}
+#naming input { background: transparent; color: #CBEFEC; text-shadow: -1px 0px 15px rgba(203,239,236,0.4), 0px 1px 15px rgba(203,239,236,0.4), 1px 0px 15px rgba(203,239,236,0.4), 0px -1px 15px rgba(203,239,236,0.4); text-align: left; width: 75%; margin: 15px;}
+#naming div.border { width: 20%; background: #00485C; }
 #play .question { position: absolute; top: 15%; flex-wrap: wrap; font-size: 3rem; box-sizing: border-box; padding: 2vh 4vh;}
 #play .question .question-box { position: relative; width: 25%; max-height: 150px; max-width: 150px; min-width: 14vh; min-height: 14vh; font-weight: 600;}
 #play #player_info { padding: 15px; }
-#play .message { text-align: center; width: 80%; margin: 3vh auto; }
+#play .message { text-align: center; width: 80%; margin: 0 auto; padding: 3vh 0;}
 #play .message img { width: 60%; }
 #play .message p { font-size: 1rem; margin: 10px 0 0 0;}
 #play .answer { position: absolute; bottom: 0; left: 0; right: 0; }
@@ -158,12 +161,16 @@ video#bgvid {
 #play .answer .submit img { width: 70%;}
 
 @media screen and (max-width: 768px) {
-    body { background: url('../img/user/bg1.jpg'); background-size: cover; }
-    .backgorund2 { background: url('../img/user/bg2.jpg'); background-size: cover; content: ""; position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: -1;}
+    body { background: url('../img/user/bg1.png'); background-size: cover; }
+    .background2 { background: url('../img/user/bg2.png'); background-size: cover; content: ""; position: absolute; top: 0; height: 100%; width: 100%; z-index: -1;}
+    .background3 { background: url('../img/user/bg3.png'); background-size: cover; content: ""; position: absolute; top: 0; height: 100%; width: 100%; z-index: -1;}
+    bottom: 0; left: 0; right: 0; z-index: -1;}
     .border { box-sizing: border-box; padding: 4%; margin: 0 auto; text-align: center;}
+    .border:active { background: #00485C;}
     .border img { width: 100%; }
+    .border.small-btn img { width: 60%; }
     header { flex-wrap: wrap; }
     header > div { text-align: center; }
     .title { width: 65%;}
-    .start { width: 60%; margin: 10% auto; }
+    .start { width: 60%; margin: 10% auto; background: #00485C; }
 }
