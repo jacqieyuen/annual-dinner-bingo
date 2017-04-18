@@ -24,10 +24,10 @@ body { font: 13px Helvetica, Arial; color: #CBEFEC; text-shadow: -1px 0px 15px r
 #host .question .question-box { font-weight: 700; width: 5%; cursor: pointer; }
 
 /*user site style*/
-#play .question { position: absolute; top: 15%; flex-wrap: wrap; font-size: 3rem; height: 50%; width: 100%; box-sizing: border-box; padding: 5%;}
-#play .question .question-box { position: relative; width: 25%; max-height: 150px; max-width: 150px; min-width: 90px; min-height: 90px; font-weight: 600;}
+#play .question { position: absolute; top: 15%; flex-wrap: wrap; font-size: 3rem; box-sizing: border-box; padding: 2vh 4vh;}
+#play .question .question-box { position: relative; width: 25%; max-height: 150px; max-width: 150px; min-width: 14vh; min-height: 14vh; font-weight: 600;}
 #play #player_info { padding: 15px; }
-#play .message { text-align: center; width: 80%; margin: 0 auto; }
+#play .message { text-align: center; width: 80%; margin: 3vh auto; }
 #play .message img { width: 60%; }
 #play .message p { font-size: 1rem; margin: 10px 0 0 0;}
 #play .answer { position: absolute; bottom: 0; left: 0; right: 0; }
@@ -43,8 +43,8 @@ body { font: 13px Helvetica, Arial; color: #CBEFEC; text-shadow: -1px 0px 15px r
 #play .answer .submit img { width: 70%;}
 
 @media screen and (max-width: 768px) {
-    body { background: url('../img/user/bg1.jpg'); background-size: cover; }
-    .backgorund2 { background: url('../img/user/bg2.jpg'); background-size: cover; content: ""; position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: -1;}
+    body { background: url('../img/user/bg1.png'); background-size: cover; }
+    .backgorund2 { background: url('../img/user/bg2.png'); background-size: cover; content: ""; position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: -1;}
     .border { box-sizing: border-box; padding: 4%; margin: 0 auto; text-align: center;}
     .border img { width: 100%; }
     header { flex-wrap: wrap; }

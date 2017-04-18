@@ -6,7 +6,7 @@ function Question() {
       "answer_txt": "<p>A. dummy text</p><p>B. dummy text</p><p>C. dummy text</p>",
       "answers": {"A":"A","B":"B","C":"C"},
       "correct_answer": "A",
-      "limit": 5,
+      "limit": 120,
       "expiry": 0,
       "status": 0,
     },
