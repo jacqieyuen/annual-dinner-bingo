@@ -13,17 +13,55 @@
     56                : 8,
     57                : 9,
     98                : 'b',
-    110                : 'n',
-    190               : 'period'
+    110               : 'n',
+    113               : 'q',
+    97                : 'a',
+    46               : 'period'
   }
+  var giftCounter;
 // Functions
   var MC_Actions      = {
+
+    hideLandingPage   : function (){
+      $(document).on("keypress", function(e){
+        var val = e.which;
+        // console.log(val);
+        if (val === 32){
+          $(".mc_board_header").hide();
+          $("#host").fadeIn().show();
+        }
+      });
+    },
+
+    giftCounter       : function (socket) {
+      socket.on("giftCounter update", function(data){
+        giftCounter = data;
+        $("#counter").html(giftCounter);
+        $(document).on("keypress", function(e){
+          var val = e.which;
+          if (val === 113 & giftCounter < 10){
+            giftCounter++
+            socket.emit('giftCounter change', giftCounter);
+            // console.log(giftCounter);
+            $("#counter").html(giftCounter);
+          };
+          if (val === 97 & giftCounter > 0){
+            giftCounter--
+            // console.log(giftCounter);
+            $("#counter").html(giftCounter);
+            socket.emit('giftCounter change', giftCounter);
+          };
+        });
+      });
+
+    },
 
     getQuestions      : function (socket){
       socket.emit('host getlist');
       socket.on('host getlist', function(data){
-        console.log(data);
+        // console.log(data);
         questions = data.questions;
+        // console.log(questions);
         qstatus = data.qstatus;
 
         for(q in qstatus){
@@ -33,31 +71,27 @@
       })
     },
 
-    hideLandingPage   : function (){
-      $(document).on("keypress", function(e){
-        var val = e.which;
-        if (val === 32){
-          $(".mc_board_header").hide();
-          $("#host").fadeIn().show();
-        }
-      });
-    },
-
     questionActiveReq : function (socket){
       $(document).on("keypress", function(e) {
-        var val = e.which;
-        var question_id = '';
-        if (val === 49 || val === 50 || val === 51 || val === 52 || val === 53 || val === 54 || val === 55 || val === 56 || val === 57){
-          question_id = keyboardValues[val];
-          // console.log(question_id);
-          var question = $(".question_mc_box[data-qid='" +question_id+"']").find(".status");
-          var question_status = question.attr("status");
-          console.log(question_status);
-          if(question_status == "0"){
-            socket.emit('question active request', question_id);
-            $(".question_mc_box[data-qid='" +question_id+"']").find(".circle").show();
-          };
-        }
+        socket.emit('requesting validation for question');
+        socket.on('status validator data', function(data){
+          console.log(data)
+          // if (data === true) {
+            var val = e.which;
+            var question_id = '';
+            if (val === 49 || val === 50 || val === 51 || val === 52 || val === 53 || val === 54 || val === 55 || val === 56 || val === 57){
+              question_id = keyboardValues[val];
+              // console.log(question_id);
+              var question = $(".question_mc_box[data-qid='" +question_id+"']").find(".status");
+              var question_status = question.attr("status");
+              console.log(question_status);
+              if(question_status == "0"){
+                socket.emit('question active request', question_id);
+                $(".question_mc_box[data-qid='" +question_id+"']").find(".circle").show();
+              };
+            };
+          // };
+        });
       });
     },
 
@@ -127,6 +161,7 @@
         var socket        = io();
         MC_Actions.getQuestions(socket)
         MC_Actions.hideLandingPage();
+        MC_Actions.giftCounter(socket);
         MC_Actions.questionActiveReq(socket);
         MC_Actions.questionActivated(socket);
         MC_Actions.endQuestion(socket);

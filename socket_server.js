@@ -11,6 +11,7 @@ module.exports = function(io){
   var questions = Question.getList();
   var activing = {"question_id": null,"expiryTime": null};
   var winner = [];
+  var giftCounter = 10;
 
   // console.log(players);
   // console.log(questions);
@@ -79,9 +80,25 @@ module.exports = function(io){
   	// Host get info
   	socket.on('host getlist', function(){
   	  socket.emit('host getlist', {"questions":questions,"qstatus":Question.getStatus()});
-
+      socket.emit('giftCounter update', giftCounter);
   	});
 
+    socket.on('giftCounter change', function(data){
+      giftCounter = data;
+    })
+
+
+    socket.on('requesting validation for question', function(){
+      var array = [];
+      for (var x in Question.questions) {
+        // console.log(Question.questions[""+x]["status"])
+        array.push(Question.questions[""+x]["status"])
+        // console.log(array);
+      }
+      //if array has 1 return false else return true
+      socket.emit('status validator data', array);
+    })
+        // console.log(Question.questions["1"]["status"]);
   	// Host request to active a question
   	socket.on('question active request', function(question_id){
 
@@ -90,8 +107,6 @@ module.exports = function(io){
   		  activing = Question.activeQuestion(question_id);
   		  var expTime = activing.expiryTime.getTime();
         console.log(expTime);
-
-
   		  // var timer1 = setInterval(function() {
   		  // 	var nowTime = new Date().getTime();
   		  // 	var theExpTime = expTime;
@@ -118,10 +133,8 @@ module.exports = function(io){
         });
 
   		  socket.emit('active question', question_id);
-  		  io.emit('question status updated', Question.questions[question_id], question_id)
-
+  		  io.emit('question status updated', Question.questions[question_id], question_id);
   		}
-
   	});
 
 

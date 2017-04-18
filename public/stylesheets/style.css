@@ -60,6 +60,13 @@ video#bgvid {
     width              : 15%;
 }
 
+#counter {
+    position           : fixed;
+    top                : 2%;
+    right              : 2%;
+    font-size          : 50px;
+}
+
 #mc_q_wrapper {
     height             : 59vh;
     display            : flex;
@@ -83,7 +90,7 @@ video#bgvid {
     left               : 0;
     background-color   : #09101a;
     box-shadow         : 0 52px 107px 101px #09101a;
-    height             : 31%;
+    height             : 22%;
     width              : 100vw;
     z-index            : -50;
 }
