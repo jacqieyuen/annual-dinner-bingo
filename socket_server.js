@@ -90,13 +90,24 @@ module.exports = function(io){
 
     socket.on('requesting validation for question', function(){
       var array = [];
+      // var permission = false;
       for (var x in Question.questions) {
         // console.log(Question.questions[""+x]["status"])
         array.push(Question.questions[""+x]["status"])
         // console.log(array);
       }
-      //if array has 1 return false else return true
-      socket.emit('status validator data', array);
+
+      console.log(array);
+      console.log(!array.includes(1));
+      if (!array.includes(1)){
+        permission = true;
+        console.log("this is active: "+permission);
+      } else {
+        permission = false;
+        console.log("this is not active: "+permission);
+      }
+      console.log(permission);
+      socket.emit('status validator data', permission);
     })
         // console.log(Question.questions["1"]["status"]);
   	// Host request to active a question

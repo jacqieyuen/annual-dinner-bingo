@@ -30,6 +30,7 @@
           $(".mc_board_header").hide();
           $("#host").fadeIn().show();
         }
+
       });
     },
 
@@ -51,6 +52,7 @@
             $("#counter").html(giftCounter);
             socket.emit('giftCounter change', giftCounter);
           };
+          // delete e.which;
         });
       });
 
@@ -75,22 +77,25 @@
       $(document).on("keypress", function(e) {
         socket.emit('requesting validation for question');
         socket.on('status validator data', function(data){
-          console.log(data)
-          // if (data === true) {
+          var permission = data;
+          if (permission=== true) {
             var val = e.which;
+            console.log(val)
             var question_id = '';
             if (val === 49 || val === 50 || val === 51 || val === 52 || val === 53 || val === 54 || val === 55 || val === 56 || val === 57){
               question_id = keyboardValues[val];
               // console.log(question_id);
               var question = $(".question_mc_box[data-qid='" +question_id+"']").find(".status");
               var question_status = question.attr("status");
-              console.log(question_status);
+              // console.log(question_status);
               if(question_status == "0"){
                 socket.emit('question active request', question_id);
+                console.log(question_id);
                 $(".question_mc_box[data-qid='" +question_id+"']").find(".circle").show();
               };
             };
-          // };
+          };
+          delete e.which;
         });
       });
     },
@@ -119,6 +124,7 @@
         // console.log(val);
         if (val === 110) {
           $("#show_mc_question").attr("src", "img/Potato.png");
+
         };
       });
     },
