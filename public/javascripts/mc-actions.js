@@ -93,6 +93,7 @@
             var num = array.indexOf(1)
             var num = num + 1
             $(".question_mc_box[data-qid='" +num+"']").addClass('mc-circle');
+            $("#show_mc_question").attr("src", questions[num]["question"]);
           };
           delete e.which;
           // console.log(val)
