@@ -52,6 +52,7 @@ module.exports = function(io){
   		Player.unbindSocket(player_id);
   	  }
   	  console.log(socket_id + ': disconnected');
+      // socket.emit('disconnected end question');
 
   	});
 

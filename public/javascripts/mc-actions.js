@@ -113,7 +113,7 @@
         var val = e.which;
         // console.log(val);
         if (val === 98) {
-          $("#show_mc_question").attr("src", "img/Potato.png");
+          $("#show_mc_question").attr("src", "img/bingo_time.png");
         };
       });
     },
@@ -123,7 +123,7 @@
         var val = e.which;
         // console.log(val);
         if (val === 110) {
-          $("#show_mc_question").attr("src", "img/Potato.png");
+          $("#show_mc_question").attr("src", "img/whats_next.png");
 
         };
       });
@@ -135,15 +135,19 @@
         // console.log(val);
         if (val === 46) {
           socket.emit('end question');
-          // console.log(val);
+          console.log("ending question with:  "+val);
         };
       });
+      // socket.on('disconnected end question', function(){
+      //   console.log("disconnected end q")
+      //   socket.emit('end question');
+      // });
     },
 
     questionFinished  : function (socket){
       socket.on('question status updated', function(data, id){
         // console.log(id);
-        // console.log(data)
+        // console.log(data);
         if (data.status == 2){
           var qstatus = data.status;
           var qid = id;
@@ -164,6 +168,7 @@
       $(function () {
         $("#host").hide();
         $(".circle").hide();
+
         var socket        = io();
         MC_Actions.getQuestions(socket)
         MC_Actions.hideLandingPage();

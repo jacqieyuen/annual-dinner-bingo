@@ -68,7 +68,7 @@ video#bgvid {
 }
 
 #mc_q_wrapper {
-    height             : 59vh;
+    height             : 45%;
     display            : flex;
     flex-direction     : column;
     justify-content    : flex-end;
@@ -86,10 +86,10 @@ video#bgvid {
 
 #shadow {
     position           : fixed;
-    top                :0;
+    top                : 0;
     left               : 0;
     background-color   : #09101a;
-    box-shadow         : 0 52px 107px 101px #09101a;
+    box-shadow         : 0 149px 107px 101px #09101a;
     height             : 22%;
     width              : 100vw;
     z-index            : -50;
