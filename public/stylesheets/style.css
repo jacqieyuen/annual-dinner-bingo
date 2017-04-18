@@ -133,10 +133,10 @@ video#bgvid {
 .question .question-box { text-shadow: none;}
 .question .question-box[bingo] { color: #fff; content: ""; position: absolute; background-image: url(../img/circle2.png); background-size: cover; background-size: 60% 60%; background-position: center; background-repeat: no-repeat; text-shadow: none;}
 .question .question-box .status[status="0"] { color: #fff; text-shadow: -1px 0px rgba(0,255,255,0.5), 0px 1px rgba(0,255,255,0.5), 1px 0px rgba(0,255,255,0.5), 0px -1px rgba(0,255,255,0.5);}
-.question .question-box.circle { content: ""; position: absolute; background-image: url(../img/circle.png); background-size: cover; background-size: 60% 60%; background-position: center; background-repeat: no-repeat;}
+.question .question-box.circle:before { content: ""; position: absolute; animation: spin 2s linear infinite; width: 62%; height: 62%; border: 10px dotted #00FFFF; border-radius: 75px;}
 .question .question-box .status[status="1"] { text-shadow: -1px 0px 1px #00FFFF, 0px 1px 1px #00FFFF, 1px 0px 1px #00FFFF, 0px -1px 1px #00FFFF; }
 .question .question-box .status[status="2"] { color: rgba(203,239,236,0.4); }
-.question.playing .question-box .status:not([status="1"]) { color: rgba(203,239,236,0.4); }
+.question.playing .question-box .status:not([status="1"]) { color: rgba(299,299,299,0.4); text-shadow: none;}
 
 /*user site style*/
 #play .question { position: absolute; top: 15%; flex-wrap: wrap; font-size: 3rem; box-sizing: border-box; padding: 2vh 4vh;}
@@ -167,4 +167,3 @@ video#bgvid {
     .title { width: 65%;}
     .start { width: 60%; margin: 10% auto; }
 }
-

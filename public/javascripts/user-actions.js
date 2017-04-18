@@ -77,9 +77,8 @@ $(function () {
     } else if ( data.status == "2"){
       //hide the buttons
       $(".backgorund2").fadeOut().addClass("hidden")
-      $(".question").removeClass("playing").find(".question-box[data-qid='" + id + "']").removeClass("circle");;
+      $(".question").removeClass("playing").find(".question-box[data-qid='" + id + "']").removeClass("circle");
       var player_answer = $("input:checked").val();
-      console.log($("input:checked"))
       $(".answer").fadeOut().addClass("hidden").find(".options").html("");
       $(".answer").attr("data-qid", "");
       //Circle the question no. if players answer it right
