@@ -81,7 +81,7 @@
               if(question_status == "0"){
                 socket.emit('question active request', question_id);
                 console.log(question_id);
-                $(".question_mc_box[data-qid='" +question_id+"']").find(".circle").show();
+                $(".question_mc_box[data-qid='" +question_id+"']").find(".mc-circle").show();
               };
             };
           };
@@ -130,7 +130,7 @@
           var qstatus = data.status;
           var qid = id;
           $('.question_mc_box[data-qid="'+qid+'"] > .status').attr("status", qstatus);
-          $('.question_mc_box[data-qid="'+qid+'"]').find(".circle").hide();
+          $('.question_mc_box[data-qid="'+qid+'"]').find(".mc-circle").hide();
         };
       });
     },
@@ -144,7 +144,7 @@
     initGame          : function (){
       $(function () {
         $("#host").hide();
-        $(".circle").hide();
+        $(".mc-circle").hide();
         var socket        = io();
         $(document).off().on("keypress", function(e) {
           MC_Actions.getQuestions(socket)
