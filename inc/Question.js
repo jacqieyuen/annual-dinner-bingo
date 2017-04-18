@@ -107,8 +107,8 @@ Question.prototype.getStatus = function() {
 };
 
 Question.prototype.activeQuestion = function(question_id) {
-    var seconds = this.questions[question_id]["limit"];
-    var expiryTime = new Date(new Date().getTime() + seconds * 1000);
+    // var seconds = this.questions[question_id]["limit"];
+    // var expiryTime = new Date(new Date().getTime() + seconds * 1000);
 
   // console.log(question_id);
     this.questions[question_id]["status"] = 1;
