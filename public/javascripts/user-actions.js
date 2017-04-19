@@ -35,21 +35,25 @@ $(function () {
     // $('#notification').html('').append('<span>'+msg+'</span>');
     // $('#login').fadeIn();
     // $(".start").fadeOut().addClass("hidden");
-    //   $('#notification').fadeIn().removeClass("hidden");
-    //   $("#notification .small-btn").click(function(){
-    //     socket.emit('login', player_id, true);
-    //   })
+      $('#notification').fadeIn().removeClass("hidden").css("display","flex");
+      $("#notification .small-btn.confirm").click(function(){
+        socket.emit('login', player_id, true);
+      })
+      $("#notification .small-btn.reject").click(function(){
+          $('#notification').fadeOut().addClass("hidden");
+      })
   });
 
-  $('form').submit(function(){
-    // Submit the login by FORM
-    socket.emit('login', $('#p').val(), $('#t').val());
-    return false;
-  });
+  // $('form').submit(function(){
+  //   // Submit the login by FORM
+  //   socket.emit('login', $('#p').val(), $('#t').val());
+  //   return false;
+  // });
 
   // Login success, show the player history.
   socket.on('login success', function(data){
     // var player_history = Object.values(data.player_history);
+    $('#notification').fadeOut().addClass("hidden");
     var player_history = [];
     for (var key in data.player_history) {
         player_history.push(data.player_history[key])
@@ -160,6 +164,8 @@ $(function () {
       //check tic tac toe
       // console.log(player_history)
       if (calculateWinner(player_history)){
+        $(".message img").attr("src","../img/user/wrong.png");
+        $(".message p").text("looks like your table didtn't get the Bingo");
         socket.emit("player wins bingo", player_id)
       }
     }
@@ -167,7 +173,8 @@ $(function () {
 
   //When the game ends
   socket.on("end game", function(){
-    $(".start").removeClass("border").text("Enjoy the prize and let's get crazy tonight!");
+    $(".end").text("Enjoy the prize and let's get crazy tonight!");
+    $(".start").addClass("hidden");
     $("#play").fadeOut().addClass("hidden");
     $("header").fadeIn().removeClass("hidden").css("display","flex");
   })

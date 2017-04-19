@@ -51,6 +51,7 @@ module.exports = function(io){
     })
 
     socket.on('name', function(player_id, name){
+      console.log(name)
       Player.getInfo(player_id)["player_name"] = name;
     })
 
@@ -152,10 +153,10 @@ module.exports = function(io){
       //Set the maximum limit for the game
       // io.emit("end game");
       var name = Player.getInfo(player_id)["player_name"]
-      if (winner.length <= 2) {
+      if (winner.length <= 1) {
         if(winner.indexOf(name) < 0 && name != undefined && name != null){
           winner.push(name);
-          winner.length == 2 ? io.emit("end game") : null;
+          winner.length == 1 ? io.emit("end game") : null;
         }
       } else {
         io.emit("end game");
