@@ -33,13 +33,13 @@ Functions to add:
     - end game button
 
   Meeting: 
-    - admin page 
-        - winner array 
-        - restart the server 
+    o admin page 
+    - winner array 
+    o restart the server 
     - question abcd player side 
     o image size 
     - present icon 
-    o end game 
+    - end game 
     - do not scale player side screen 
     1920 x 840
     - animations
