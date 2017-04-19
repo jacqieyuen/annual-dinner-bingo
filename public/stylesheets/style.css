@@ -28,7 +28,7 @@ body {
         }
 
 .mc_questions .question_mc_box .status[status="2"] {
-    color              : gray;
+    color              : rgba(203,239,236,0.4);
     text-shadow        : none;
 }
 
@@ -76,7 +76,7 @@ video#bgvid {
 }
 
 #mc_q_wrapper {
-    height             : 55vh;
+    height             : 60vh;
     display            : flex;
     flex-direction     : column;
     justify-content    : flex-end;
