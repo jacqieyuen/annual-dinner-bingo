@@ -23,7 +23,6 @@ module.exports = function(io){
   	console.log(socket.id + ': connected');
   	// Player login authentication
   	socket.on('login', function(player_id, kick_current_user){
-
   	  var playerLogin = Player.login(player_id, socket_id, kick_current_user);
   	  if(!playerLogin.success){
   	  	// Login fail and return the error message
@@ -37,7 +36,6 @@ module.exports = function(io){
   		  var questions_status = Question.getStatus();
   		// pass Player info, history, question status after login success
   	  	socket.emit('login success', {"player_name": playerLogin.player_info.player_name, "player_history": playerLogin.player_history, "questions_status": questions_status});
-
   	  }
 
   	});
@@ -88,10 +86,11 @@ module.exports = function(io){
             result = true;
           };
   				Player.updateAnswer(player_id, question_id, result);
-          io.emit("check bingo board", Player.getHistory(player_id))
+          console.log(Player.getHistory(player_id))
+          io.emit("check bingo board", Player.getHistory(player_id), player_id)
   				// console.log(Player.getHistory(player_id));
   			}else{
-  				console.log("Cannot submit answer, expiried");
+  				// console.log("Cannot submit answer, expiried");
   			}
   	    }
   	});
@@ -115,16 +114,16 @@ module.exports = function(io){
         array.push(Question.questions[""+x]["status"])
         // console.log(array);
       }
-      console.log(array);
-      console.log(!array.includes(1));
+      // console.log(array);
+      // console.log(!array.includes(1));
       if (!array.includes(1)){
         permission = true;
-        console.log("this is active: "+permission);
+        // console.log("this is active: "+permission);
       } else {
         permission = false;
-        console.log("this is not active: "+permission);
+        // console.log("this is not active: "+permission);
       }
-      console.log(permission);
+      // console.log(permission);
       socket.emit('status validator data', permission, array);
     })
         // console.log(Question.questions["1"]["status"]);
@@ -135,28 +134,30 @@ module.exports = function(io){
   		  activing = Question.activeQuestion(question_id);
   		  // var expTime = activing.expiryTime.getTime();
         // console.log(expTime);
-
   		  socket.emit('active question', question_id);
   		  io.emit('question status updated', Question.questions[question_id], question_id);
   		}
   	});
     socket.on('end question', function(){
-          console.log("Finish Question: " + question_ID);
+          // console.log("Finish Question: " + question_ID);
           Question.finishQuestion(question_ID);
           activing = {"question_id": null,"expiryTime": null};
           io.emit('question status updated', Question.questions[question_ID], question_ID);
         });
 
     //Players alert host when win  Bingo
-    socket.on("player wins bingo", function(){
+    socket.on("player wins bingo", function(player_id){
       //Set the maximum limit for the game
-      io.emit("end game");
-      // if (winner.length <= 1) {
-      //   winner.push(socket_ids[socket.id]['player_id']);
-      //   winner.length == 1 ? io.emit("end game") : null;
-      // } else {
-      //   io.emit("end game");
-      // }
+      // io.emit("end game");
+      var name = Player.getInfo(player_id)["player_name"]
+      if (winner.length <= 2) {
+        if(winner.indexOf(name) < 0 && name != undefined && name != null){
+          winner.push(name);
+          winner.length == 2 ? io.emit("end game") : null;
+        }
+      } else {
+        io.emit("end game");
+      }
     })
 
   });

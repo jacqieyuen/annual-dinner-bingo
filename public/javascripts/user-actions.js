@@ -49,10 +49,15 @@ $(function () {
 
   // Login success, show the player history.
   socket.on('login success', function(data){
-    var player_history = Object.values(data.player_history);
+    // var player_history = Object.values(data.player_history);
+    var player_history = [];
+    for (var key in data.player_history) {
+        player_history.push(data.player_history[key])
+    }
+    $(".background2").fadeIn().removeClass("hidden");
     if(data.player_name) {
-      console.log("asdfsdaf")
-      $("#start .start").click(function(){
+      $(".start.border").click(function(e){
+        e.preventDefault();
         $(".player-name").text(data.player_name);
         console.log(data.player_history);
         console.log(data.questions_status);
@@ -60,18 +65,28 @@ $(function () {
         // TODO: gen board order by position
         $("header").fadeOut().addClass("hidden");
         $("#play").fadeIn().removeClass("hidden");
-        $(".background2").removeClass("hidden");
+        $(".background3").removeClass("hidden");
         //generate board order by position
-        player_history.map( function(data, id){
-          $(".question-box:nth-child(" + data["position"] + ")").attr("data-qid", id+1).children().text(id+1).attr("status", data.status)
+        for (var i = 0; i< player_history.length; i++) {
+          // debugger
+          $(".question-box:nth-child(" + player_history[i]["position"] + ")").attr("data-qid", i+1).children().text(i+1).attr("status", player_history[i].status)
           if(data.status == 1){
-            console.log($("li[data-qid='" + parseInt(id)+1 + "']"))
-            $("li[data-qid='" + (parseInt(id)+1) + "']").addClass("circle")
+            $("li[data-qid='" + (parseInt(i)+1) + "']").addClass("circle")
           }
-          if (data["answer"] == true){
-            $(".question-box[data-qid='" + parseInt(id+1) + "']").attr("bingo", true);
+          if (player_history[i]["answer"] == true){
+            $(".question-box[data-qid='" + parseInt(i+1) + "']").attr("bingo", true);
           }
-        })
+        }
+        // player_history.map( function(data, id){
+        //   $(".question-box:nth-child(" + data["position"] + ")").attr("data-qid", id+1).children().text(id+1).attr("status", data.status)
+        //   if(data.status == 1){
+        //     console.log($("li[data-qid='" + parseInt(id)+1 + "']"))
+        //     $("li[data-qid='" + (parseInt(id)+1) + "']").addClass("circle")
+        //   }
+        //   if (data["answer"] == true){
+        //     $(".question-box[data-qid='" + parseInt(id+1) + "']").attr("bingo", true);
+        //   }
+        // })
       })
     }
   });
@@ -79,7 +94,7 @@ $(function () {
   // A question started or finished
   socket.on('question status updated', function(data, id){
     var options = data.answers,
-        options_values,
+        options_values = [],
         options_keys;
     $('.question-box[data-qid="'+ id +'"] > .status').attr("status", data.status);
     $(".answer").attr("data-qid", id)
@@ -90,11 +105,17 @@ $(function () {
       //reset options
       $(".options").html("");
       $(".question").addClass("playing").find(".question-box[data-qid='" + id + "']").addClass("circle");
-      options_values = Object.values(options);
-      options_values.map(function(value, id){
-        var str = "<div><input type='radio' name='answer' id='answer_" + value + "' value='" + value + "'/><label for='answer_" + value + "' class='flex-align-center'><img src='../img/2x" + value + ".png'</label></div>"
+      for (var key in options) {
+          options_values.push(options[key])
+      }
+      for(var i = 0; i < options_values.length; i++){
+        var str = "<div><input type='radio' name='answer' id='answer_" + options_values[i] + "' value='" + options_values[i] + "'/><label for='answer_" + options_values[i] + "' class='flex-align-center'><img src='../img/2x" + options_values[i] + ".png'</label></div>"
         $(".options").append(str);
-      });
+      }
+      // options_values.map(function(value, id){
+      //   var str = "<div><input type='radio' name='answer' id='answer_" + value + "' value='" + value + "'/><label for='answer_" + value + "' class='flex-align-center'><img src='../img/2x" + value + ".png'</label></div>"
+      //   $(".options").append(str);
+      // });
       $(".answer").fadeIn().removeClass("hidden");
     //if a question is finished
     } else if ( data.status == "2"){
@@ -117,27 +138,31 @@ $(function () {
   });
 
   //Check players' bingo board
-  socket.on("check bingo board", function(data){
-    var player_history = Object.values(data),
-        board = new Array;
-    //get player's board order and answers
-    player_history.map(function(data, id){
-      var item = {}
-      item[data["position"]] = data["answer"];
-      board.push(item);
-    })
-    //sort the order by position
-    board.sort(function(a, b){
-      return Object.keys(a)[0] - Object.keys(b)[0]
-    })
-    //convert object to series
-    player_history = [];
-    board.map(function(data, id){
-      player_history.push(Object.values(data)[0])
-    })
-    //check tic tac toe
-    console.log(player_history)
-    calculateWinner(player_history) ? socket.emit("player wins bingo") : null
+  socket.on("check bingo board", function(data, id){
+    if(id == player_id){
+      var player_history = Object.values(data),
+          board = new Array;
+      //get player's board order and answers
+      player_history.map(function(data, id){
+        var item = {}
+        item[data["position"]] = data["answer"];
+        board.push(item);
+      })
+      //sort the order by position
+      board.sort(function(a, b){
+        return Object.keys(a)[0] - Object.keys(b)[0]
+      })
+      //convert object to series
+      player_history = [];
+      board.map(function(data, id){
+        player_history.push(Object.values(data)[0])
+      })
+      //check tic tac toe
+      // console.log(player_history)
+      if (calculateWinner(player_history)){
+        socket.emit("player wins bingo", player_id)
+      }
+    }
   })
 
   //When the game ends
@@ -186,7 +211,7 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] == true && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return true;
     }
   }
   return null;
