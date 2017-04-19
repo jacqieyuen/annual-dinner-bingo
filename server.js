@@ -25,10 +25,13 @@ app.set('view engine', 'pug');
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Sockets Route
-require('./routes/sockets')(io);
+require('./routes/sockets')(io, http);
 
 // MC-Board Route
 require('./routes/mc-board')(app);
+
+// Admin Route
+require('./routes/admin')(app);
 
 // User-Board Route
 require('./routes/user-board')(app);
@@ -37,3 +40,4 @@ require('./routes/user-board')(app);
 http.listen(port, function(){
   console.log('server started on port ' + port)
 });
+// console.log(http.close());

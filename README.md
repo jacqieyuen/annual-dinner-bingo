@@ -31,3 +31,15 @@ Functions to add:
     o no shadow, change to outline 
     o add answers to 8 & 9
     - end game button
+
+  Meeting: 
+    o admin page 
+    - winner array 
+    o restart the server 
+    - question abcd player side 
+    o image size 
+    - present icon 
+    - end game 
+    - do not scale player side screen 
+    1920 x 840
+    - animations

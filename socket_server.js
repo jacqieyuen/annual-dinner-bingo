@@ -13,6 +13,8 @@ module.exports = function(io){
   var winner = [];
   var giftCounter = 10;
   var question_ID = "";
+  // console.log(http);
+  // console.log(io);
 
   // console.log(players);
   // console.log(questions);
@@ -159,6 +161,18 @@ module.exports = function(io){
         io.emit("end game");
       }
     })
-
+    socket.on("end server", function(){
+      socket_ids      = Array();
+      Player          = new PlayerClass();
+      players         = Player.getList();
+      players_history = Array();
+      Question        = new QuestionClass();
+      questions       = Question.getList();
+      activing        = {"question_id": null,"expiryTime": null};
+      winner          = [];
+      giftCounter     = 10;
+      question_ID     = "";
+      console.log("restart")
+    })
   });
 }
