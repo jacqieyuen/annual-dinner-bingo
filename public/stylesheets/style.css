@@ -76,15 +76,20 @@ video#bgvid {
 }
 
 #mc_q_wrapper {
-    height             : 60vh;
+    height             : 68vh;
     display            : flex;
     flex-direction     : column;
     justify-content    : flex-end;
     align-items        : center;
 }
 
+#question_content {
+    /*width              : 55vw;*/
+}
+
 #question_content img{
-    width              : 55vw;
+    width              : 100%;
+    transform          : scale(1.5,1.5);
 }
 
 #host #mc_q_wrapper ul {
@@ -94,6 +99,7 @@ video#bgvid {
     width              : 100vw;
     list-style         : none;
     font-size          : 5vw;
+    margin-top         : 44px;
 }
 
 /*#shadow {
