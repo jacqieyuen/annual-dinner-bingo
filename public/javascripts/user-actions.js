@@ -1,8 +1,8 @@
 $(function () {
   var socket = io();
 
-  var player_id = getParameterByName('p');
-  var token = getParameterByName('t');
+  var player_id = getParameterByName('t');
+  var token = getParameterByName('tokenplayer');
   $('#p').val(player_id);
 
   if(player_id != ""){

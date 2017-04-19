@@ -164,7 +164,7 @@ video#bgvid {
 #naming input { background: transparent; color: #CBEFEC; text-shadow: -1px 0px 15px rgba(203,239,236,0.4), 0px 1px 15px rgba(203,239,236,0.4), 1px 0px 15px rgba(203,239,236,0.4), 0px -1px 15px rgba(203,239,236,0.4); text-align: left; width: 75%; margin: 15px;}
 #naming div.border { width: 20%; background: #00485C; }
 #play .question { position: absolute; top: 23vh; flex-wrap: wrap; font-size: 3rem; box-sizing: border-box; padding: 2vh 4vh;}
-#play .question .question-box { position: relative; width: 25%; max-height: 150px; max-width: 150px; min-width: 14vh; min-height: 14vh; font-weight: 600;}
+#play .question .question-box { position: relative; width: 33%; max-height: 26vh; max-width: 26vh; min-width: 14vh; min-height: 14vh; font-weight: 600;}
 #play #player_info { padding: 15px; }
 #play .message { text-align: center; width: 80%; margin: 0 auto; padding: 3vh 0;}
 #play .message img { width: 60%; }
@@ -181,7 +181,7 @@ video#bgvid {
 #play .answer .submit { width: 40%; margin: 2vh auto;}
 #play .answer .submit img { width: 10vh;}
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1366px) {
     body { background: url('../img/user/bg1.png'); background-size: cover; }
     .background2 { background: url('../img/user/bg2.png'); background-size: cover; content: ""; position: absolute; top: 0; height: 100%; width: 100%; z-index: -1;}
     .background3 { background: url('../img/user/bg3.png'); background-size: cover; content: ""; position: absolute; top: 0; height: 100%; width: 100%; z-index: -1;}

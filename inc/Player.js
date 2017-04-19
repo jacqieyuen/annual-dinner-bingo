@@ -23,10 +23,10 @@ function Player() {
     //   "history": null
     // }
   };
-  for (i = 0; i<=10; i++) {
-    this.players_list["p" + i] = {
-      "player_id": "p" + i,
-      "player_name": "", 
+  for (i = 0; i<=70; i++) {
+    this.players_list[i] = {
+      "player_id": i,
+      "player_name": "",
       "socket_id": null,
       "history": null}
   }
