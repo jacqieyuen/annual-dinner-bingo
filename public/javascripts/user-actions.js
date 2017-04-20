@@ -3,6 +3,7 @@ $(function () {
 
   var player_id = getParameterByName('t');
   var token = getParameterByName('tokenplayer');
+  var bingo = false;
   $('#p').val(player_id);
 
   if(player_id != ""){
@@ -44,6 +45,15 @@ $(function () {
       })
   });
 
+  socket.on('kicked out', function(msg){
+    // console.log("login fail: " + msg);
+    // $('#notification').html('').append('<span>'+msg+'</span>');
+    // $('#login').fadeIn();
+    // $(".start").fadeOut().addClass("hidden");
+      $('#notification').fadeIn().removeClass("hidden").css("display","flex");
+      $('#notification').find("div p").text("You have been kicked out.")
+  });
+
   // $('form').submit(function(){
   //   // Submit the login by FORM
   //   socket.emit('login', $('#p').val(), $('#t').val());
@@ -81,6 +91,10 @@ $(function () {
             $(".question-box[data-qid='" + parseInt(i+1) + "']").attr("bingo", true);
           }
         }
+        if (bingo){
+          $(".message img").attr("src","../img/user/bingo.png");
+          $(".message p").text('Call out "Bingo" now!');
+        }
         // player_history.map( function(data, id){
         //   $(".question-box:nth-child(" + data["position"] + ")").attr("data-qid", id+1).children().text(id+1).attr("status", data.status)
         //   if(data.status == 1){
@@ -100,45 +114,50 @@ $(function () {
     var options = data.answers,
         options_values = [],
         options_keys;
-    $('.question-box[data-qid="'+ id +'"] > .status').attr("status", data.status);
-    $(".answer").attr("data-qid", id)
-    // console.log(data);
-    //if a question is being activated
-    if (data.status == "1"){
-      socket.emit("update player question status", player_id, id, 1)
-      //reset options
-      $(".options").html("");
-      $(".question").addClass("playing").find(".question-box[data-qid='" + id + "']").addClass("circle");
-      for (var key in options) {
-          options_values.push(options[key])
-      }
-      for(var i = 0; i < options_values.length; i++){
-        var str = "<div><input type='radio' name='answer' id='answer_" + options_values[i] + "' value='" + options_values[i] + "'/><label for='answer_" + options_values[i] + "' class='flex-align-center'><img src='../img/2x" + options_values[i] + ".png'</label></div>"
-        $(".options").append(str);
-      }
-      // options_values.map(function(value, id){
-      //   var str = "<div><input type='radio' name='answer' id='answer_" + value + "' value='" + value + "'/><label for='answer_" + value + "' class='flex-align-center'><img src='../img/2x" + value + ".png'</label></div>"
-      //   $(".options").append(str);
-      // });
-      $(".answer").fadeIn().removeClass("hidden");
-    //if a question is finished
-    } else if ( data.status == "2"){
-      socket.emit("update player question status", player_id, id, 2)
-      //hide the buttons
-      $(".question").removeClass("playing").find(".question-box[data-qid='" + id + "']").removeClass("circle");
-      var player_answer = $("input:checked").val();
-      $(".answer").fadeOut().addClass("hidden").find(".options").html("");
-      $(".answer").attr("data-qid", "");
-      //Circle the question no. if players answer it right
-      if ( player_answer == data.correct_answer){
-        $(".question-box[data-qid='" + id + "']").attr("bingo", true);
-        $(".message img").attr("src","../img/user/correct.png");
-        $(".message p").text("The number matches!");
-      }else{
-        $(".message img").attr("src","../img/user/wrong.png");
-        $(".message p").text("Looks like your table just missed a shot.");
-      }
-    }
+
+          $('.question-box[data-qid="'+ id +'"] > .status').attr("status", data.status);
+          $(".answer").attr("data-qid", id)
+          // console.log(data);
+          //if a question is being activated
+          if (data.status == "1" && !bingo){
+            socket.emit("update player question status", player_id, id, 1)
+            //reset options
+            $(".options").html("");
+            $(".question").addClass("playing").find(".question-box[data-qid='" + id + "']").addClass("circle");
+            for (var key in options) {
+              options_values.push(options[key])
+            }
+            for(var i = 0; i < options_values.length; i++){
+              var str = "<div><input type='radio' name='answer' id='answer_" + options_values[i] + "' value='" + options_values[i] + "'/><label for='answer_" + options_values[i] + "' class='flex-align-center'><img src='../img/2x" + options_values[i] + ".png'</label></div>"
+              $(".options").append(str);
+            }
+            // options_values.map(function(value, id){
+            //   var str = "<div><input type='radio' name='answer' id='answer_" + value + "' value='" + value + "'/><label for='answer_" + value + "' class='flex-align-center'><img src='../img/2x" + value + ".png'</label></div>"
+            //   $(".options").append(str);
+            // });
+            $(".answer").fadeIn().removeClass("hidden");
+            //if a question is finished
+          } else if ( data.status == "2"){
+            socket.emit("update player question status", player_id, id, 2)
+            //hide the buttons
+            $(".question").removeClass("playing").find(".question-box[data-qid='" + id + "']").removeClass("circle");
+            var player_answer = $("input:checked").val();
+            $(".answer").fadeOut().addClass("hidden").find(".options").html("");
+            $(".answer").attr("data-qid", "");
+            //Circle the question no. if players answer it right
+              if ( player_answer == data.correct_answer){
+                $(".question-box[data-qid='" + id + "']").attr("bingo", true);
+                if (!bingo){
+                  $(".message img").attr("src","../img/user/correct.png");
+                  $(".message p").text("The number matches!");
+                }
+              }else{
+                if(!bingo){
+                  $(".message img").attr("src","../img/user/wrong.png");
+                  $(".message p").text("Looks like your table just missed a shot.");
+                }
+              }
+            }
   });
 
   //Check players' bingo board
@@ -172,18 +191,20 @@ $(function () {
       //   player_history.push(Object.values(data)[0])
       // })
       //check tic tac toe
-      console.log("player his: "+ calculateWinner(player_history))
+      // console.log("player his: "+ calculateWinner(player_history))
 
       if (calculateWinner(player_history)){
         $(".message img").attr("src","../img/user/bingo.png");
         $(".message p").text('Call out "Bingo" now!');
         socket.emit("player wins bingo", player_id)
+        bingo = true;
       }
     }
   })
 
   //When the game ends
   socket.on("end game", function(){
+    alert("game end")
     $(".end").text("Enjoy the prize and let's get crazy tonight!");
     $(".start").hide().addClass("hidden");
     $("#play").fadeOut().addClass("hidden");

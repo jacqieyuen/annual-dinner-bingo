@@ -50,7 +50,7 @@
 
     reEnterPage: function (){
 
-    }, 
+    },
 
     giftCounter: function (socket, e) {
       socket.on("giftCounter update", function(data){
@@ -171,22 +171,26 @@
       });
     },
 
-    gameEnd: function (e){
+    gameEnd: function (socket, e){
       var val = e.which
       if (val === 92) {
         if (showEndGame === false) {
           $("footer.mc_board_header").show();
           $("#host").hide();
           showEndGame = true;
-        } else if (showEndGame === true) {
-          $("footer.mc_board_header").hide();
-          $("#host").show();
-          showEndGame = false;
+          console.log("asdfsdaf")
         }
+        // socket.emit('mc ends');
+        socket.emit("end game");
+        // } else if (showEndGame === true) {
+        //   $("footer.mc_board_header").hide();
+        //   $("#host").show();
+        //   showEndGame = false;
+        // }
       }
     },
 
-    
+
     initGame          : function (){
       $(function () {
         $("#host").hide();
@@ -205,7 +209,7 @@
           MC_Actions.pauseBingo(e);
           MC_Actions.pauseSelectQ(e);
           MC_Actions.questionFinished(socket);
-          MC_Actions.gameEnd(e);
+          MC_Actions.gameEnd(socket, e);
         });
       });
     }
@@ -213,4 +217,3 @@
 
 // START
   MC_Actions.initGame();
-

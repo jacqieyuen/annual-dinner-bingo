@@ -33,6 +33,9 @@ module.exports = function(io){
   	  }else{
   	  	// Login Success
   	  	// if(typeof socket_ids[socket_id] === "undefined"){
+
+        console.log(playerLogin)
+        io.to(playerLogin.prev_socket_id).emit('kicked out');
   		  socket_ids[socket_id] = {"socket_id":socket_id, "player_id": player_id};
   		  // };
   		  var questions_status = Question.getStatus();
@@ -155,17 +158,22 @@ module.exports = function(io){
     socket.on("player wins bingo", function(player_id){
       //Set the maximum limit for the game
       // io.emit("end game");
-      var name = Player.getInfo(player_id)["player_name"]
-      if (winner.length <= 2) {
+      // console.log(player_id)
+      var name = Player.getInfo(player_id)["player_name"],
+          object = {};
+      // if (winner.length <= 2) {
         if(winner.indexOf(name) < 0 && name != undefined && name != null){
-          winner.push(name);
-          winner.length == 2 ? io.emit("end game") : null;
+          object[player_id] = name;
+          winner.push(object);
+          // winner.length == 2 ? io.emit("end game") : null;
           // socket.emit("send winner array", winner)
         }
-      } else {
-        io.emit("end game");
-      }
+      // }
+      //  else {
+      //   io.emit("end game");
+      // }
     })
+
     socket.on("end server", function(){
       socket_ids      = Array();
       Player          = new PlayerClass();
@@ -178,6 +186,10 @@ module.exports = function(io){
       giftCounter     = 10;
       question_ID     = "";
       console.log("restart")
+    })
+
+    socket.on("mc ends", function(){
+      io.emit("end game");
     })
   });
 }
