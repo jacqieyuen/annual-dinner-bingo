@@ -125,7 +125,7 @@ video#bgvid {
 #list-winners ul{
   display: flex;
   flex-wrap:  wrap;
-  font-size: 50px;
+  font-size: 40px;
   justify-content: space-around;
   list-style: none;
   margin-top: 9%;
@@ -133,6 +133,7 @@ video#bgvid {
 
 #list-winners li {
   /*float: left;*/
+  padding: 0 5px;
   list-style: none;
   /*font-size: 50px;*/
 }
