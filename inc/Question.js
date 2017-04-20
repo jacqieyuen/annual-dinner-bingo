@@ -3,8 +3,8 @@ function Question() {
   this.questions = {
     "1": {
       "question": "img/mc/question-list/q1.png",
-      "answers": {"A":"A","B":"B","C":"C"},
-      "correct_answer": "A",
+      "answers": {"Yes":"Yes","No":"No"},
+      "correct_answer": "Yes",
       "limit": 5,
       "expiry": 0,
       "status": 0,
@@ -21,8 +21,8 @@ function Question() {
     "3": {
       "question": "img/mc/question-list/q3.png",
       "answer_txt": "<p>A. dummy text</p><p>B. dummy text</p><p>C. dummy text</p>",
-      "answers": {"A":"A","B":"B","C":"C"},
-      "correct_answer": "A",
+      "answers": {"Yes":"Yes","No":"No"},
+      "correct_answer": "Yes",
       "limit": 5,
       "expiry": 0,
       "status": 0,
@@ -39,8 +39,8 @@ function Question() {
     "5": {
       "question": "img/mc/question-list/q5.png",
       "answer_txt": "<p>A. dummy text</p><p>B. dummy text</p><p>C. dummy text</p>",
-      "answers": {"A":"A","B":"B","C":"C"},
-      "correct_answer": "A",
+      "answers": {"Yes":"Yes","No":"No"},
+      "correct_answer": "Yes",
       "limit": 5,
       "expiry": 0,
       "status": 0,
@@ -57,8 +57,8 @@ function Question() {
     "7": {
       "question": "img/mc/question-list/q7.png",
       "answer_txt": "<p>A. dummy text</p><p>B. dummy text</p><p>C. dummy text</p>",
-      "answers": {"A":"A","B":"B","C":"C"},
-      "correct_answer": "A",
+      "answers": {"Yes":"Yes","No":"No"},
+      "correct_answer": "Yes",
       "limit": 5,
       "expiry": 0,
       "status": 0,
@@ -66,8 +66,8 @@ function Question() {
     "8": {
       "question": "img/mc/question-list/q8.png",
       "answer_txt": "<p>Yes / No</p>",
-      "answers": {"Yes":"Yes","No":"No"},
-      "correct_answer": "Yes",
+      "answers": {"A":"A","B":"B","C":"C","D":"D"},
+      "correct_answer": "B",
       "limit": 5,
       "expiry": 0,
       "status": 0,
@@ -75,8 +75,8 @@ function Question() {
     "9": {
       "question": "img/mc/question-list/q9.png",
       "answer_txt": "<p>A. dummy text</p><p>B. dummy text</p><p>C. dummy text</p>",
-      "answers": {"A":"A","B":"B","C":"C"},
-      "correct_answer": "A",
+      "answers": {"A":"A","B":"B","C":"C","D":"D"},
+      "correct_answer": "C",
       "limit": 5,
       "expiry": 0,
       "status": 0,

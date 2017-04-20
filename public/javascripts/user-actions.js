@@ -167,6 +167,7 @@ $(function () {
 
   //When the game ends
   socket.on("end game", function(){
+    console.log("hello");
     $(".start").removeClass("border").text("Enjoy the prize and let's get crazy tonight!");
     $("#play").fadeOut().addClass("hidden");
     $("header").fadeIn().removeClass("hidden").css("display","flex");

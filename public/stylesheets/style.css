@@ -96,7 +96,7 @@ video#bgvid {
 }
 
 #mc_q_wrapper {
-    height             : 68vh;
+    height             : 94vh;
     display            : flex;
     flex-direction     : column;
     justify-content    : flex-end;
@@ -120,6 +120,16 @@ video#bgvid {
     list-style         : none;
     font-size          : 5vw;
     margin-top         : 44px;
+}
+
+#list-winners li {
+  float: left;
+  list-style: none;
+  font-size: 50px;
+}
+
+ul#list-winners-ul {
+  margin-top: 9%!important;
 }
 
 /*#shadow {

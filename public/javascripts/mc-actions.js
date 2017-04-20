@@ -142,7 +142,7 @@
         if (val === 46) {
           // socket.emit('question active request');
           socket.emit('end question');
-          console.log("ending question with:  "+val);
+          // console.log("ending question with:  "+val);
         };
     },
 
@@ -171,18 +171,35 @@
       });
     },
 
-    gameEnd: function (e){
+    getWinnerArray : function (socket) {
+    // socket.emit("get winner array");
+      socket.on("send winner array", function(data){
+       $('#list-winners ul').html("")
+        for(var i = 0; i < data.length; i++){
+          console.log(Object.values(data[i]).join(""))
+          var name= (Object.values(data[i])).join('');
+          $('#list-winners ul').append('<li>'+name+'</li>')
+        }
+          
+      });
+      
+    },
+
+    gameEnd: function (socket, e){
       var val = e.which
       if (val === 92) {
         if (showEndGame === false) {
           $("footer.mc_board_header").show();
           $("#host").hide();
           showEndGame = true;
-        } else if (showEndGame === true) {
-          $("footer.mc_board_header").hide();
-          $("#host").show();
-          showEndGame = false;
+          // console.log("ending game");
+          socket.emit("mc ends game now");
         }
+        // } else if (showEndGame === true) {
+        //   $("footer.mc_board_header").hide();
+        //   $("#host").show();
+        //   showEndGame = false;
+        // }
       }
     },
 
@@ -205,7 +222,8 @@
           MC_Actions.pauseBingo(e);
           MC_Actions.pauseSelectQ(e);
           MC_Actions.questionFinished(socket);
-          MC_Actions.gameEnd(e);
+          MC_Actions.getWinnerArray(socket);
+          MC_Actions.gameEnd(socket, e);
         });
       });
     }

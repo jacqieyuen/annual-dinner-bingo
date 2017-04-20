@@ -13,6 +13,7 @@ module.exports = function(io){
   var winner = [];
   var giftCounter = "10";
   var question_ID = "";
+  var gameEND = false;
   // console.log(http);
   // console.log(io);
 
@@ -23,8 +24,17 @@ module.exports = function(io){
 
   	var socket_id = socket.id;
   	console.log(socket.id + ': connected');
+
+    socket.on("mc ends game now", function() {
+      console.log("game ending");
+      socket.broadcast.emit("end game");
+      gameEND = true;
+    });
   	// Player login authentication
   	socket.on('login', function(player_id, kick_current_user){
+      if (gameEND) {
+          socket.emit("end game");
+        }else{
   	  var playerLogin = Player.login(player_id, socket_id, kick_current_user);
   	  if(!playerLogin.success){
   	  	// Login fail and return the error message
@@ -38,8 +48,9 @@ module.exports = function(io){
   		  var questions_status = Question.getStatus();
   		// pass Player info, history, question status after login success
   	  	socket.emit('login success', {"player_name": playerLogin.player_info.player_name, "player_history": playerLogin.player_history, "questions_status": questions_status});
-  	  }
-
+    	 
+      }
+        }
   	});
 
     socket.on('check name', function(player_id){
@@ -101,7 +112,8 @@ module.exports = function(io){
   	socket.on('host getlist', function(){
   	  socket.emit('host getlist', {"questions":questions,"qstatus":Question.getStatus()});
       socket.emit('giftCounter update', giftCounter);
-      // socket.emit("send winner array", winnerArray)
+      // var winnerArray = [{1:"asd"},{5:"asda"},{6:"fasfsda"},{4:"asfd"}];
+      // socket.emit("send winner array", winnerArray);
   	});
 
     socket.on('giftCounter change', function(data){
@@ -153,28 +165,33 @@ module.exports = function(io){
     socket.on("player wins bingo", function(player_id){
       //Set the maximum limit for the game
       // io.emit("end game");
+      console.log("winner got bingo")
       var name = Player.getInfo(player_id)["player_name"]
       if (winner.length <= 2) {
+        console.log("winner got bingo1")
+
         if(winner.indexOf(name) < 0 && name != undefined && name != null){
+        console.log("winner got bingo2")
           winner.push(name);
           winner.length == 2 ? io.emit("end game") : null;
-          // socket.emit("send winner array", winner)
+          socket.broadcast.emit("send winner array", winner)
         }
-      } else {
-        io.emit("end game");
-      }
+      } 
     }) 
+
     socket.on("end server", function(){
-      socket_ids      = Array();
-      Player          = new PlayerClass();
-      players         = Player.getList();
-      players_history = Array();
-      Question        = new QuestionClass();
-      questions       = Question.getList();
-      activing        = {"question_id": null,"expiryTime": null};
-      winner          = [];
-      giftCounter     = 10;
-      question_ID     = "";
+      var socket_ids = Array();
+
+      var Player = new PlayerClass();
+      var players = Player.getList();
+      var players_history = Array();
+      var Question = new QuestionClass();
+      var questions = Question.getList();
+      var activing = {"question_id": null,"expiryTime": null};
+      var winner = [];
+      var giftCounter = "10";
+      var question_ID = "";
+      var gameEND = false;
       console.log("restart")
     })
   });
