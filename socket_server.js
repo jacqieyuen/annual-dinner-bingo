@@ -51,7 +51,7 @@ module.exports = function(io){
     })
 
     socket.on('name', function(player_id, name){
-      console.log(name)
+      // console.log(name)
       Player.getInfo(player_id)["player_name"] = name;
     })
 
@@ -88,8 +88,9 @@ module.exports = function(io){
           if ( value == Question.questions[question_id]["correct_answer"]) {
             result = true;
           };
+
   				Player.updateAnswer(player_id, question_id, result);
-          console.log(Player.getHistory(player_id))
+          // console.log(Player.getHistory(player_id))
           io.emit("check bingo board", Player.getHistory(player_id), player_id)
   				// console.log(Player.getHistory(player_id));
   			}else{

@@ -133,10 +133,10 @@ $(function () {
       if ( player_answer == data.correct_answer){
         $(".question-box[data-qid='" + id + "']").attr("bingo", true);
         $(".message img").attr("src","../img/user/correct.png");
-        $(".message p").text("Your table hit a Bingo! tryto get a row of it!");
+        $(".message p").text("The number matches!");
       }else{
         $(".message img").attr("src","../img/user/wrong.png");
-        $(".message p").text("looks like your table didtn't get the Bingo");
+        $(".message p").text("Looks like your table just missed a shot.");
       }
     }
   });
@@ -144,28 +144,39 @@ $(function () {
   //Check players' bingo board
   socket.on("check bingo board", function(data, id){
     if(id == player_id){
-      var player_history = Object.values(data),
+      var player_history = [],
           board = new Array;
-      //get player's board order and answers
-      player_history.map(function(data, id){
+      for (var key in data) {
         var item = {}
-        item[data["position"]] = data["answer"];
+        item[data[key]["position"]] = data[key]["answer"];
         board.push(item);
-      })
+      }
+
+      //get player's board order and answers
+      // player_history.map(function(data, id){
+      //   var item = {}
+      //   item[data["position"]] = data["answer"];
+      //   board.push(item);
+      // })
       //sort the order by position
       board.sort(function(a, b){
         return Object.keys(a)[0] - Object.keys(b)[0]
       })
-      //convert object to series
-      player_history = [];
-      board.map(function(data, id){
-        player_history.push(Object.values(data)[0])
-      })
+      // //convert object to series
+      // player_history = [];
+      for(var key in board ){
+        player_history.push(board[key][parseInt(key)+1])
+      }
+      // console.log(board)
+      // board.map(function(data, id){
+      //   player_history.push(Object.values(data)[0])
+      // })
       //check tic tac toe
-      // console.log(player_history)
+      console.log("player his: "+ calculateWinner(player_history))
+
       if (calculateWinner(player_history)){
-        $(".message img").attr("src","../img/user/wrong.png");
-        $(".message p").text("looks like your table didtn't get the Bingo");
+        $(".message img").attr("src","../img/user/bingo.png");
+        $(".message p").text('Call out "Bingo" now!');
         socket.emit("player wins bingo", player_id)
       }
     }
@@ -174,7 +185,7 @@ $(function () {
   //When the game ends
   socket.on("end game", function(){
     $(".end").text("Enjoy the prize and let's get crazy tonight!");
-    $(".start").addClass("hidden");
+    $(".start").hide().addClass("hidden");
     $("#play").fadeOut().addClass("hidden");
     $("header").fadeIn().removeClass("hidden").css("display","flex");
   })

@@ -166,7 +166,7 @@ video#bgvid {
 /*.question .question-box span.status { margin-top: -5%; }*/
 .question .question-box[bingo] { color: #fff; content: ""; position: absolute; background-image: url(../img/circle2.png); background-size: cover; background-size: 80% 80%; background-position: center; background-repeat: no-repeat; text-shadow: none;}
 .question .question-box .status[status="0"] { color: #fff; text-shadow: -1px 0px rgba(0,255,255,0.5), 0px 1px rgba(0,255,255,0.5), 1px 0px rgba(0,255,255,0.5), 0px -1px rgba(0,255,255,0.5);}
-.question .question-box.circle:before { content: ""; position: absolute; animation: spin 2s linear infinite; width: 62%; height: 62%; border: 10px dotted #00FFFF; border-radius: 75px;}
+.question .question-box.circle:before { content: ""; position: absolute; animation: spin 2s linear infinite; width: 62%; height: 62%; border: 10px dotted #00FFFF; border-radius: 75px; top: 1.25vh; left: 1.25vh;}
 .question .question-box .status[status="1"] { text-shadow: -1px 0px 1px #00FFFF, 0px 1px 1px #00FFFF, 1px 0px 1px #00FFFF, 0px -1px 1px #00FFFF; }
 .question .question-box .status[status="2"] { color: rgba(203,239,236,0.4); }
 
