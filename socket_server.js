@@ -51,6 +51,7 @@ module.exports = function(io){
     })
 
     socket.on('name', function(player_id, name){
+      // console.log(name)
       Player.getInfo(player_id)["player_name"] = name;
     })
 
@@ -73,7 +74,7 @@ module.exports = function(io){
       // socket.emit('disconnected end question');
 
   	});
- 
+
   	// Player Submit the answer
   	socket.on('update answer', function(question_id, value){
   	  var socket_id = socket.id,
@@ -87,8 +88,9 @@ module.exports = function(io){
           if ( value == Question.questions[question_id]["correct_answer"]) {
             result = true;
           };
+
   				Player.updateAnswer(player_id, question_id, result);
-          console.log(Player.getHistory(player_id))
+          // console.log(Player.getHistory(player_id))
           io.emit("check bingo board", Player.getHistory(player_id), player_id)
   				// console.log(Player.getHistory(player_id));
   			}else{
@@ -108,7 +110,7 @@ module.exports = function(io){
       giftCounter = data;
     })
 
-    
+
 
     socket.on('requesting validation for question', function(){
       var array = [];
@@ -163,7 +165,7 @@ module.exports = function(io){
       } else {
         io.emit("end game");
       }
-    }) 
+    })
     socket.on("end server", function(){
       socket_ids      = Array();
       Player          = new PlayerClass();
