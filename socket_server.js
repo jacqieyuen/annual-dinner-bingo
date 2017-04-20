@@ -11,7 +11,7 @@ module.exports = function(io){
   var questions = Question.getList();
   var activing = {"question_id": null,"expiryTime": null};
   var winner = [];
-  var giftCounter = 10;
+  var giftCounter = "10";
   var question_ID = "";
   // console.log(http);
   // console.log(io);
@@ -73,7 +73,7 @@ module.exports = function(io){
       // socket.emit('disconnected end question');
 
   	});
-
+ 
   	// Player Submit the answer
   	socket.on('update answer', function(question_id, value){
   	  var socket_id = socket.id,
@@ -101,12 +101,14 @@ module.exports = function(io){
   	socket.on('host getlist', function(){
   	  socket.emit('host getlist', {"questions":questions,"qstatus":Question.getStatus()});
       socket.emit('giftCounter update', giftCounter);
+      // socket.emit("send winner array", winnerArray)
   	});
 
     socket.on('giftCounter change', function(data){
       giftCounter = data;
     })
 
+    
 
     socket.on('requesting validation for question', function(){
       var array = [];
@@ -156,11 +158,12 @@ module.exports = function(io){
         if(winner.indexOf(name) < 0 && name != undefined && name != null){
           winner.push(name);
           winner.length == 2 ? io.emit("end game") : null;
+          // socket.emit("send winner array", winner)
         }
       } else {
         io.emit("end game");
       }
-    })
+    }) 
     socket.on("end server", function(){
       socket_ids      = Array();
       Player          = new PlayerClass();

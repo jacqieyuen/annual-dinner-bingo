@@ -18,7 +18,21 @@
     97  : 'a',
     46  : 'period'
   }
+  var counterWords = {
+    1 : "ONE",
+    2 : "TWO",
+    3 : "THREE",
+    4 : "FOUR",
+    5 : "FIVE",
+    6 : "SIX",
+    7 : "SEVEN",
+    8 : "EIGHT",
+    9 : "NINE",
+    10: "TEN"
+  }
   var giftCounter;
+  var showEndGame = false;
+
 // Functions
   var MC_Actions = {
 
@@ -41,20 +55,18 @@
     giftCounter: function (socket, e) {
       socket.on("giftCounter update", function(data){
         giftCounter = data;
-        $("#counter").html(giftCounter);
-        // $(document).on("keypress", function(e){
+        $("#num-counter").html(counterWords[giftCounter]);
           var val = e.which;
           if (val === 113 & giftCounter < 10){
             giftCounter++
             socket.emit('giftCounter change', giftCounter);
-            $("#counter").html(giftCounter);
+            $("#num-counter").html(counterWords[giftCounter]);
           };
           if (val === 97 & giftCounter > 0){
             giftCounter--
-            $("#counter").html(giftCounter);
+            $("#num-counter").html(counterWords[giftCounter]);
             socket.emit('giftCounter change', giftCounter);
           };
-        // });
       });
 
     },
@@ -159,15 +171,26 @@
       });
     },
 
-    gameEnd: function (socket){
-      socket.on("end game", function(){
-        $("#host").html("").text("End Game")
-      });
+    gameEnd: function (e){
+      var val = e.which
+      if (val === 92) {
+        if (showEndGame === false) {
+          $("footer.mc_board_header").show();
+          $("#host").hide();
+          showEndGame = true;
+        } else if (showEndGame === true) {
+          $("footer.mc_board_header").hide();
+          $("#host").show();
+          showEndGame = false;
+        }
+      }
     },
 
+    
     initGame          : function (){
       $(function () {
         $("#host").hide();
+        $("footer.mc_board_header").hide();
         // $(".mc-circle").hide();
         var socket        = io();
         $(document).off().on("keypress", function(e) {
@@ -175,13 +198,14 @@
           MC_Actions.hideLandingPage(e);
           MC_Actions.giftCounter(socket, e);
           MC_Actions.questionActiveReq(socket, e);
-          MC_Actions.answerEight(e)
+          MC_Actions.answerEight(e);
+          MC_Actions.answerNine(e);
           MC_Actions.questionActivated(socket, e);
           MC_Actions.endQuestion(socket, e);
           MC_Actions.pauseBingo(e);
           MC_Actions.pauseSelectQ(e);
           MC_Actions.questionFinished(socket);
-          MC_Actions.gameEnd(socket);
+          MC_Actions.gameEnd(e);
         });
       });
     }

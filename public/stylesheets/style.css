@@ -59,7 +59,12 @@ video#bgvid {
     top                : -15%;
     left               : 30%;
     width              : 39%;
+    text-align: center;
 }
+#starter_host_logo img{
+    width              : 100%;
+}
+
 
 #host_logo {
     position           : fixed;
@@ -73,6 +78,21 @@ video#bgvid {
     top                : 2%;
     right              : 2%;
     font-size          : 50px;
+}
+
+#counter p{
+    font-size          : 30px;
+    
+}
+
+#left-coutner {
+    float: left;
+    margin-right: 20px;
+}
+
+#counter img{
+    width: 6vw;
+    float: right;
 }
 
 #mc_q_wrapper {

@@ -38,8 +38,8 @@ Functions to add:
     o restart the server 
     - question abcd player side 
     o image size 
-    - present icon 
-    - end game 
+    o present icon 
+    o end game 
     - do not scale player side screen 
     1920 x 840
-    - animations
+
