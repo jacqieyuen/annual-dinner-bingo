@@ -10,12 +10,16 @@ block user
         img(src="../img/ok.png")
     #start.hidden
       img.title(src="./img/title.png")
-      #notification.hidden
-        p Beware! Pressing button below will kick out current user.
-        a.border.small-btn
-          img(src="../img/ok.png")
+      #notification.hidden.full-screen-absolute
+        div
+          p Beware! Pressing button below will kick out current user.
+          a.border.small-btn.reject
+            img(src="../img/2xno.png")
+          a.border.small-btn.confirm
+            img(src="../img/2xyes.png")
       .start.border
         img(src="../img/user/start.png")
+      .end
   #play.hidden
     .message
       img(src="../img/user/start2.png")

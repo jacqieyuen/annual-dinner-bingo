@@ -43,6 +43,9 @@ module.exports = function(io){
   	  }else{
   	  	// Login Success
   	  	// if(typeof socket_ids[socket_id] === "undefined"){
+
+        console.log(playerLogin)
+        io.to(playerLogin.prev_socket_id).emit('kicked out');
   		  socket_ids[socket_id] = {"socket_id":socket_id, "player_id": player_id};
   		  // };
   		  var questions_status = Question.getStatus();
@@ -62,6 +65,7 @@ module.exports = function(io){
     })
 
     socket.on('name', function(player_id, name){
+      // console.log(name)
       Player.getInfo(player_id)["player_name"] = name;
     })
 
@@ -84,7 +88,7 @@ module.exports = function(io){
       // socket.emit('disconnected end question');
 
   	});
- 
+
   	// Player Submit the answer
   	socket.on('update answer', function(question_id, value){
   	  var socket_id = socket.id,
@@ -98,8 +102,9 @@ module.exports = function(io){
           if ( value == Question.questions[question_id]["correct_answer"]) {
             result = true;
           };
+
   				Player.updateAnswer(player_id, question_id, result);
-          console.log(Player.getHistory(player_id))
+          // console.log(Player.getHistory(player_id))
           io.emit("check bingo board", Player.getHistory(player_id), player_id)
   				// console.log(Player.getHistory(player_id));
   			}else{
@@ -120,7 +125,7 @@ module.exports = function(io){
       giftCounter = data;
     })
 
-    
+
 
     socket.on('requesting validation for question', function(){
       var array = [];
@@ -165,19 +170,23 @@ module.exports = function(io){
     socket.on("player wins bingo", function(player_id){
       //Set the maximum limit for the game
       // io.emit("end game");
-      console.log("winner got bingo")
-      var name = Player.getInfo(player_id)["player_name"]
-      if (winner.length <= 2) {
-        console.log("winner got bingo1")
-
+      // console.log(player_id)
+      var name = Player.getInfo(player_id)["player_name"],
+          object = {};
+      // if (winner.length <= 2) {
         if(winner.indexOf(name) < 0 && name != undefined && name != null){
-        console.log("winner got bingo2")
-          winner.push(name);
-          winner.length == 2 ? io.emit("end game") : null;
+          object[player_id] = name;
+          winner.push(object);
           socket.broadcast.emit("send winner array", winner)
+          // winner.length == 2 ? io.emit("end game") : null;
+          // socket.emit("send winner array", winner)
         }
-      } 
-    }) 
+      // }
+      //  else {
+      //   io.emit("end game");
+      // }
+    })
+
 
     socket.on("end server", function(){
       var socket_ids = Array();
@@ -193,6 +202,10 @@ module.exports = function(io){
       var question_ID = "";
       var gameEND = false;
       console.log("restart")
+    })
+
+    socket.on("mc ends", function(){
+      io.emit("end game");
     })
   });
 }

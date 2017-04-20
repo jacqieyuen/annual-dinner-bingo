@@ -50,7 +50,7 @@
 
     reEnterPage: function (){
 
-    }, 
+    },
 
     giftCounter: function (socket, e) {
       socket.on("giftCounter update", function(data){
@@ -184,7 +184,6 @@
       });
       
     },
-
     gameEnd: function (socket, e){
       var val = e.which
       if (val === 92) {
@@ -203,7 +202,7 @@
       }
     },
 
-    
+
     initGame          : function (){
       $(function () {
         $("#host").hide();
@@ -231,4 +230,3 @@
 
 // START
   MC_Actions.initGame();
-

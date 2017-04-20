@@ -107,12 +107,12 @@ Player.prototype.login = function(player_id, socket_id, kick_current_user) {
 
     }else if(this.getBindedSocket(player_id) !== null){
       if (kick_current_user){
+        var prev_socket_id = this.getBindedSocket(player_id);
         this.bindSocket(player_id, socket_id);
-        return {"success":true, "error_msg":"", "player_info": this.getInfo(player_id), "player_history": this.getHistory(player_id)};
+        return {"success":true, "error_msg":"", "player_info": this.getInfo(player_id), "player_history": this.getHistory(player_id), "prev_socket_id" : prev_socket_id};
       }else {
         return {"success":false, "error_msg":"Please has already logged in"};
       }
-
     }else{
       //Login Success
       this.bindSocket(player_id, socket_id);
