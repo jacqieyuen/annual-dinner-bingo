@@ -96,7 +96,7 @@ video#bgvid {
 }
 
 #mc_q_wrapper {
-    height             : 94vh;
+    height             : 66vh;
     display            : flex;
     flex-direction     : column;
     justify-content    : flex-end;
@@ -122,15 +122,21 @@ video#bgvid {
     margin-top         : 44px;
 }
 
-#list-winners li {
-  float: left;
-  list-style: none;
+#list-winners ul{
+  display: flex;
+  flex-wrap:  wrap;
   font-size: 50px;
+  justify-content: space-around;
+  list-style: none;
+  margin-top: 9%;
 }
 
-ul#list-winners-ul {
-  margin-top: 9%!important;
+#list-winners li {
+  /*float: left;*/
+  list-style: none;
+  /*font-size: 50px;*/
 }
+
 
 /*#shadow {
     position           : fixed;
